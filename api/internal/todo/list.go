@@ -27,11 +27,11 @@ func (t *TodoList) Contains(id int) bool {
 }
 
 func (t *TodoList) Remove(id int) {
-	for index, item := range t.Items {
+	for i, item := range t.Items {
 		if item.Id != id {
 			continue
 		}
 
-		t.Items = append(t.Items[:index], t.Items[index+1:]...)
+		t.Items = append(t.Items[:i], t.Items[i+1:]...)
 	}
 }
