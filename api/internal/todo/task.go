@@ -1,6 +1,6 @@
 package todo
 
-type Item struct {
+type Task struct {
 	Id          int    `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
@@ -8,6 +8,6 @@ type Item struct {
 	Deadline    Deadline
 }
 
-func (i *Item) Str() string {
+func (t *Task) Str() string {
 	return ""
 }

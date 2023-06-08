@@ -24,7 +24,6 @@ type Storer interface {
 }
 
 type Store struct {
-	
 }
 
 func MakeStore() *Store {

@@ -1,41 +1,46 @@
-# clean & build
+GO ?= go
+GOFMT ?= gofmt "-s"
+GOFILES := $(shell find . -name "*.go")
 
-.PHONY: clean build
+# clean & build
 
 clean:
 	@rm -r build
 
 build: 
-	go build -o build/program/app cmd/httpd/main.go 
+	$(GO) build -o build/program/app cmd/httpd/main.go 
 
 # run & dev
-
-.PHONY: run dev
 
 run:
 	make build
 	./build/program/app
 
 dev: 
-	go run cmd/httpd/main.go
+	$(GO) run cmd/httpd/main.go
+
+# fmt
+
+fmt:
+	$(GOFMT) -w $(GOFILES)
 
 # testing
 
-.PHONY: test
-
 test:
-	go clean -testcache 
-	go mod tidy
-	go test -cover -v ./...
+	$(GO) clean -testcache 
+	$(GO) mod tidy
+	$(GO) test -cover -v ./...
 
 # deployment
-
-.PHONY: deploy tdeploy
 
 deploy:
 	docker build --tag todo-api .
 	docker run -rm todo-api
 
-deploy:
+tdeploy:
 	docker build --tag todo-api .
 	docker run todo-api
+
+# phony
+
+.PHONY: clean build run dev fmt test deploy tdeploy

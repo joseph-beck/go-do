@@ -1,6 +1,6 @@
 package main
 
-import(
+import (
 	"go-do/internal/app"
 )
 

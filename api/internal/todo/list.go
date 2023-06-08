@@ -1,7 +1,7 @@
 package todo
 
 type TodoList struct {
-	Items []Item
+	Tasks []Task
 }
 
 func MakeTodoList() *TodoList {
@@ -12,12 +12,12 @@ func (t *TodoList) Str() string {
 	return ""
 }
 
-func (t *TodoList) Add(item Item) {
-	t.Items = append(t.Items, item)
+func (t *TodoList) Add(item Task) {
+	t.Tasks = append(t.Tasks, item)
 }
 
 func (t *TodoList) Contains(id int) bool {
-	for _, item := range t.Items {
+	for _, item := range t.Tasks {
 		if item.Id == id {
 			return true
 		}
@@ -27,11 +27,11 @@ func (t *TodoList) Contains(id int) bool {
 }
 
 func (t *TodoList) Remove(id int) {
-	for i, item := range t.Items {
+	for i, item := range t.Tasks {
 		if item.Id != id {
 			continue
 		}
 
-		t.Items = append(t.Items[:i], t.Items[i+1:]...)
+		t.Tasks = append(t.Tasks[:i], t.Tasks[i+1:]...)
 	}
 }
