@@ -7,7 +7,7 @@ import (
 )
 
 func TestPingGet(t *testing.T) {
-	p := PingGet()
+	p := PingGet(nil)
 
 	assert.NotNil(t, p)
 }

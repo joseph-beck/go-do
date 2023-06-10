@@ -8,6 +8,12 @@ type Task struct {
 	Deadline    Deadline
 }
 
+func MakeTask() *Task {
+	return &Task{
+		Id: 123,
+	}
+}
+
 func (t *Task) Str() string {
 	return ""
 }

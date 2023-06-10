@@ -1,5 +1,14 @@
 package database
 
+import (
+	"go-do/internal/postgres"
+	"go-do/pkg/util"
+	"log"
+	"sync"
+
+	"github.com/go-pg/pg/v10"
+)
+
 type StoreAdder interface {
 	Add(i interface{})
 }
@@ -13,7 +22,11 @@ type StoreDeleter interface {
 }
 
 type StoreChecker interface {
-	Check(i interface{})
+	Check(i interface{}) bool
+}
+
+type StorePinger interface {
+	Ping() error
 }
 
 type Storer interface {
@@ -24,8 +37,24 @@ type Storer interface {
 }
 
 type Store struct {
+	Db   *pg.DB
+	DbMu sync.Mutex
 }
 
 func MakeStore() *Store {
-	return &Store{}
+	log.Println("Making Store")
+
+	return &Store{
+		Db: postgres.MakeDb(),
+	}
+}
+
+func (s *Store) Close() {
+	s.DbMu.Lock()
+	defer s.DbMu.Unlock()
+
+	log.Println("Closing Store")
+
+	err := s.Db.Close()
+	util.ErrOut(err)
 }

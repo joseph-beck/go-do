@@ -1,19 +1,39 @@
 package app
 
 import (
-	p "go-do/internal/pinghandler"
+	"errors"
+	"go-do/internal/router"
+	"go-do/pkg/util"
+	"log"
+	"os"
+	"os/signal"
 
-	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
+var r *router.Router
+
 func Run() {
-	r := gin.Default()
+	log.Println("Starting app")
 
-	r.GET("/ping", p.PingGet())
+	err := godotenv.Load()
+	util.ErrOut(err)
 
+	r = router.MakeRouter()
+	r.RegisterRoutes(*makeRoutes())
 	r.Run()
+
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt)
+	<-stop
+
+	log.Println("Shutting down app")
+	shutdown()
 }
 
-func Shutdown() {
-
+func shutdown() {
+	if r == nil {
+		log.Fatalln(errors.New("failed trying to closing a nil store"))
+	}
+	r.Store.Close()
 }
