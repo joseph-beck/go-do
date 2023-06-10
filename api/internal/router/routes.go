@@ -1,14 +1,29 @@
 package router
 
-import "github.com/gin-gonic/gin"
+import (
+	"go-do/internal/pinghandler"
 
-type Routes []gin.RouteInfo
+	"github.com/gin-gonic/gin"
+)
 
-var routes = Routes{
-	gin.RouteInfo{
-		Method:      "GET",
-		Path:        "/",
-		Handler:     "Ping",
-		HandlerFunc: nil,
+type Route struct {
+	Method      Method
+	Path        string
+	Handler     string
+	HandlerFunc gin.HandlerFunc
+}
+
+type Routes struct {
+	RouteInfo []Route
+}
+
+var ping = Routes{
+	[]Route{
+		Route{
+			Method:      Get,
+			Path:        "/",
+			Handler:     "ping",
+			HandlerFunc: pinghandler.PingGet(),
+		},
 	},
 }

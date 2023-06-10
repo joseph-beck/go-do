@@ -1,4 +1,4 @@
-package mongo
+package database
 
 type StoreAdder interface {
 	Add(i interface{})

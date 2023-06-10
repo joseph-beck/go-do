@@ -1,4 +1,4 @@
-package mongo
+package database
 
 func Add(i interface{}) {
 

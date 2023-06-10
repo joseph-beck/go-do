@@ -35,3 +35,7 @@ func (t *TodoList) Remove(id int) {
 		t.Tasks = append(t.Tasks[:i], t.Tasks[i+1:]...)
 	}
 }
+
+func (t *TodoList) Len() int {
+	return len(t.Tasks)
+}

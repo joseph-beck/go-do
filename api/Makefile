@@ -29,7 +29,7 @@ fmt:
 test:
 	$(GO) clean -testcache 
 	$(GO) mod tidy
-	$(GO) test -cover -v ./...
+	$(GO) test -cover ./...
 
 # deployment
 
