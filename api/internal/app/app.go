@@ -18,7 +18,7 @@ func Run() {
 	err := godotenv.Load()
 	util.ErrOut(err)
 
-	r = router.MakeRouter("tasks")
+	r = router.MakeRouter()
 	r.RegisterRoutes(*makeRoutes())
 	r.Run()
 

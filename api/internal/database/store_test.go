@@ -9,23 +9,21 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var s Store
-
-func TestMain(m *testing.M) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalln("failed to load env")
-	}
-
-	s = *MakeStore()
-
-	err = s.Ping()
+func TestStore(t *testing.T) {
+	err := rs.Ping()
 	if err != nil {
 		log.Fatalln("db failed to connect")
 	}
 }
 
 func TestStoreRead(t *testing.T) {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("failed to load env")
+	}
+
+	s := *MakeStore()
+
 	q := todo.TaskModel{Id: 1}
 	s.Read(&q)
 
@@ -34,6 +32,13 @@ func TestStoreRead(t *testing.T) {
 }
 
 func TestStoreAdd(t *testing.T) {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("failed to load env")
+	}
+
+	s := *MakeStore()
+
 	q := todo.TaskModel{
 		Name: "Test Task",
 	}
@@ -49,6 +54,13 @@ func TestStoreDelete(t *testing.T) {
 }
 
 func TestStoreCheck(t *testing.T) {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatalln("failed to load env")
+	}
+
+	s := *MakeStore()
+
 	e := s.Check(todo.MakeTask())
 	assert.True(t, e)
 }

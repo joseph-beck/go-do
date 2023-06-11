@@ -11,10 +11,10 @@ type Router struct {
 	Store  *database.TodoStore
 }
 
-func MakeRouter(t string) *Router {
+func MakeRouter() *Router {
 	return &Router{
 		Engine: gin.Default(),
-		Store:  database.MakeTodoStore(t),
+		Store:  database.MakeTodoStore(),
 	}
 }
 

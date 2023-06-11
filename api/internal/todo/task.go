@@ -12,6 +12,10 @@ type TaskModel struct {
 
 // deadline:"dd/mm/yyyy-hh:mm"
 
+func MakeTaskModel() *TaskModel {
+	return &TaskModel{}
+}
+
 func (t *TaskModel) ToTask() *Task {
 	return &Task{
 		Id:          t.Id,

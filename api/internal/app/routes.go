@@ -21,7 +21,7 @@ func makeRoutes() *router.Routes {
 				Method:      router.Get,
 				Path:        "/",
 				Handler:     "todo",
-				HandlerFunc: todohandler.TodoGet(r.Store),
+				HandlerFunc: todohandler.TodoGet(r.Store, r.Store),
 			},
 		},
 	}

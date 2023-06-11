@@ -8,11 +8,19 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TodoGet(s database.TodoStoreReader) gin.HandlerFunc {
+func TodoGet(s database.TodoStoreReader, v database.TodoStoreChecker) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		t := make([]todo.TaskModel, 0)
-		s.ReadAll(&t)
-		c.JSON(http.StatusOK, t)
+		q := c.Query("table")
+		if q == "" {
+			q = "tasks"
+		}
+
+		var t todo.TaskModel
+		l := make([]todo.TaskModel, 0)
+		if v.Check(t, q) {
+			s.ReadAll(&l, q)
+		}
+		c.JSON(http.StatusOK, l)
 	}
 }
 

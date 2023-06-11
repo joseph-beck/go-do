@@ -6,48 +6,49 @@ import (
 	"go-do/pkg/util"
 )
 
-func (t *TodoStore) Read(i *todo.TaskModel) {
+func (t *TodoStore) Read(task *todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
-	r := t.db.Table(t.table).Model(&i).First(&i)
+	r := t.db.Table(table).Model(&task).First(&task)
 	util.ErrOut(r.Error)
 }
 
-func (t *TodoStore) ReadAll(l *[]todo.TaskModel) {
+func (t *TodoStore) ReadAll(tasks *[]todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
-	r := t.db.Table(t.table).Find(&l)
+	r := t.db.Table(table).Find(&tasks)
 	util.ErrOut(r.Error)
 }
 
-func (t *TodoStore) Add(i todo.TaskModel) {
+func (t *TodoStore) Add(task todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
 	err := t.Create()
 	util.ErrOut(err)
 
-	r := t.db.Create(&i)
+	r := t.db.Table(table).Create(&task)
 	util.ErrOut(r.Error)
 }
 
-func (t *TodoStore) Update(i todo.TaskModel) {
+func (t *TodoStore) Update(task todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 }
 
-func (t *TodoStore) Delete(i todo.TaskModel) {
+func (t *TodoStore) Delete(task todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 }
 
-func (t *TodoStore) Check(i todo.TaskModel) bool {
+func (t *TodoStore) Check(task todo.TaskModel, table string) bool {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
-	return false
+	r := t.db.Table(table).Model(&task).First(&task)
+	return r.Error == nil
 }
 
 func (t *TodoStore) Ping() error {

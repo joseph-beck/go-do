@@ -10,24 +10,24 @@ import (
 )
 
 type TodoStoreReader interface {
-	Read(*todo.TaskModel)
-	ReadAll(*[]todo.TaskModel)
+	Read(*todo.TaskModel, string)
+	ReadAll(*[]todo.TaskModel, string)
 }
 
 type TodoStoreAdder interface {
-	Add(todo.TaskModel)
+	Add(todo.TaskModel, string)
 }
 
 type TodoStoreUpdater interface {
-	Update(todo.TaskModel)
+	Update(todo.TaskModel, string)
 }
 
 type TodoStoreDeleter interface {
-	Delete(todo.TaskModel)
+	Delete(todo.TaskModel, string)
 }
 
 type TodoStoreChecker interface {
-	Check(todo.TaskModel) bool
+	Check(todo.TaskModel, string) bool
 }
 
 type TodoStorePinger interface {
@@ -57,15 +57,13 @@ type TodoStorer interface {
 }
 
 type TodoStore struct {
-	db    *gorm.DB
-	dbMu  sync.Mutex
-	table string
+	db   *gorm.DB
+	dbMu sync.Mutex
 }
 
-func MakeTodoStore(t string) *TodoStore {
+func MakeTodoStore() *TodoStore {
 	return &TodoStore{
-		db:    makeDb(),
-		table: t,
+		db: makeDb(),
 	}
 }
 

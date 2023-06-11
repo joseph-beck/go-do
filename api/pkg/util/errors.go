@@ -6,7 +6,8 @@ import (
 )
 
 var (
-	ErrTaskConv = errors.New("error converting interface to task")
+	ErrTaskConv  = errors.New("error converting interface to task")
+	ErrQueryResp = errors.New("error getting query response")
 )
 
 func ErrOut(err error) {
