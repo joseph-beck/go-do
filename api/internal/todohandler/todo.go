@@ -1,19 +1,23 @@
 package todohandler
 
-import "github.com/gin-gonic/gin"
+import (
+	"go-do/internal/database"
 
-func TodoGet() gin.HandlerFunc {
+	"github.com/gin-gonic/gin"
+)
+
+func TodoGet(s *database.Store) gin.HandlerFunc {
 	return nil
 }
 
-func TodoPost() gin.HandlerFunc {
+func TodoPost(s *database.Store) gin.HandlerFunc {
 	return nil
 }
 
-func TodoPatch() gin.HandlerFunc {
+func TodoPatch(s *database.Store) gin.HandlerFunc {
 	return nil
 }
 
-func TodoDelete() gin.HandlerFunc {
+func TodoDelete(s *database.Store) gin.HandlerFunc {
 	return nil
 }

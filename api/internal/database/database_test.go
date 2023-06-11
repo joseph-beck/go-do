@@ -25,8 +25,19 @@ func TestMain(m *testing.M) {
 	}
 }
 
-func TestStoreAdd(t *testing.T) {
+func TestStoreRead(t *testing.T) {
+	q := todo.TaskModel{Id: 1}
+	s.Read(&q)
 
+	assert.NotNil(t, q)
+	log.Fatalln(q.Name)
+}
+
+func TestStoreAdd(t *testing.T) {
+	q := todo.TaskModel{
+		Name: "Test Task",
+	}
+	s.Add(q)
 }
 
 func TestStoreUpdate(t *testing.T) {
@@ -38,8 +49,6 @@ func TestStoreDelete(t *testing.T) {
 }
 
 func TestStoreCheck(t *testing.T) {
-	assert.NotNil(t, s)
-
 	e := s.Check(todo.MakeTask())
 	assert.True(t, e)
 }

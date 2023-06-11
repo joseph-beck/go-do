@@ -14,13 +14,13 @@ func TestTask(t *testing.T) {
 		Complete:    false,
 		Deadline: Deadline{
 			Date: Date{
-				Day:   1,
-				Month: 11,
-				Year:  2023,
+				Day:   "1",
+				Month: "11",
+				Year:  "2023",
 			},
 			Time: Time{
-				Hour:   10,
-				Minute: 30,
+				Hour:   "10",
+				Minute: "30",
 			},
 		},
 	}

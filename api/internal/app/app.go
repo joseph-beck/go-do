@@ -1,8 +1,8 @@
 package app
 
 import (
-	"errors"
 	"go-do/internal/router"
+	"go-do/internal/todo"
 	"go-do/pkg/util"
 	"log"
 	"os"
@@ -20,6 +20,13 @@ func Run() {
 	util.ErrOut(err)
 
 	r = router.MakeRouter()
+
+	t := &todo.TaskModel{
+		Id: 4,
+	}
+	r.Store.Read(t)
+	log.Println(t.Str())
+
 	r.RegisterRoutes(*makeRoutes())
 	r.Run()
 
@@ -32,8 +39,7 @@ func Run() {
 }
 
 func shutdown() {
-	if r == nil {
-		log.Fatalln(errors.New("failed trying to closing a nil store"))
+	if r != nil {
+		r.Store.Close()
 	}
-	r.Store.Close()
 }

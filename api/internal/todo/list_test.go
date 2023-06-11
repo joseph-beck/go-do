@@ -24,17 +24,17 @@ func TestTodoListAdd(t *testing.T) {
 		Complete:    false,
 		Deadline: Deadline{
 			Date: Date{
-				Day:   1,
-				Month: 11,
-				Year:  2023,
+				Day:   "1",
+				Month: "11",
+				Year:  "2023",
 			},
 			Time: Time{
-				Hour:   10,
-				Minute: 30,
+				Hour:   "10",
+				Minute: "30",
 			},
 		},
 	})
-	
+
 	assert.Equal(t, l.Len(), 1)
 }
 
@@ -50,13 +50,13 @@ func TestTodoListContains(t *testing.T) {
 		Complete:    false,
 		Deadline: Deadline{
 			Date: Date{
-				Day:   1,
-				Month: 11,
-				Year:  2023,
+				Day:   "1",
+				Month: "11",
+				Year:  "2023",
 			},
 			Time: Time{
-				Hour:   10,
-				Minute: 30,
+				Hour:   "10",
+				Minute: "30",
 			},
 		},
 	})
@@ -79,13 +79,13 @@ func TestTodoListRemove(t *testing.T) {
 		Complete:    false,
 		Deadline: Deadline{
 			Date: Date{
-				Day:   1,
-				Month: 11,
-				Year:  2023,
+				Day:   "1",
+				Month: "11",
+				Year:  "2023",
 			},
 			Time: Time{
-				Hour:   10,
-				Minute: 30,
+				Hour:   "10",
+				Minute: "30",
 			},
 		},
 	})

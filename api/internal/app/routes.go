@@ -3,6 +3,7 @@ package app
 import (
 	"go-do/internal/pinghandler"
 	"go-do/internal/router"
+	"go-do/internal/todohandler"
 )
 
 func makeRoutes() *router.Routes {
@@ -14,6 +15,13 @@ func makeRoutes() *router.Routes {
 				Path:        "/",
 				Handler:     "ping",
 				HandlerFunc: pinghandler.PingGet(r.Store),
+			},
+			{
+				Name:        "GetTodo",
+				Method:      router.Get,
+				Path:        "/",
+				Handler:     "todo",
+				HandlerFunc: todohandler.TodoGet(r.Store),
 			},
 		},
 	}
