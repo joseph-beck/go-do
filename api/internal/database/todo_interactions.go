@@ -6,7 +6,7 @@ import (
 	"go-do/pkg/util"
 )
 
-func (t *TodoStore) Read(task *todo.TaskModel, table string) {
+func (t *TodoStore) Scan(task *todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
@@ -14,7 +14,7 @@ func (t *TodoStore) Read(task *todo.TaskModel, table string) {
 	util.ErrOut(r.Error)
 }
 
-func (t *TodoStore) ReadAll(tasks *[]todo.TaskModel, table string) {
+func (t *TodoStore) Read(tasks *[]todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
@@ -35,7 +35,7 @@ func (t *TodoStore) Add(task todo.TaskModel, table string) {
 
 func (t *TodoStore) Update(task todo.TaskModel, table string) {
 	t.dbMu.Lock()
-	defer t.dbMu.Unlock()
+	defer t.dbMu.Unlock() 
 }
 
 func (t *TodoStore) Delete(task todo.TaskModel, table string) {

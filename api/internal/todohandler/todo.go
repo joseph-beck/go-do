@@ -15,23 +15,28 @@ func TodoGet(s database.TodoStoreReader, v database.TodoStoreChecker) gin.Handle
 			q = "tasks"
 		}
 
-		var t todo.TaskModel
 		l := make([]todo.TaskModel, 0)
-		if v.Check(t, q) {
-			s.ReadAll(&l, q)
+		if v.Check(todo.TaskModel{}, q) {
+			s.Read(&l, q)
 		}
 		c.JSON(http.StatusOK, l)
 	}
 }
 
 func TodoPost(s *database.Store) gin.HandlerFunc {
-	return nil
+	return func(c *gin.Context) {
+
+	}
 }
 
 func TodoPatch(s *database.Store) gin.HandlerFunc {
-	return nil
+	return func(c *gin.Context) {
+		
+	}
 }
 
 func TodoDelete(s *database.Store) gin.HandlerFunc {
-	return nil
+	return func(c *gin.Context) {
+		
+	}
 }

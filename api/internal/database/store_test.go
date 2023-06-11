@@ -25,7 +25,7 @@ func TestStoreRead(t *testing.T) {
 	s := *MakeStore()
 
 	q := todo.TaskModel{Id: 1}
-	s.Read(&q)
+	s.Scan(&q)
 
 	assert.NotNil(t, q)
 	log.Fatalln(q.Name)

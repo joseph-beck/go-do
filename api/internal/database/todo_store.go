@@ -9,9 +9,12 @@ import (
 	"gorm.io/gorm"
 )
 
+type TodoStoreScanner interface {
+	Scan(*todo.TaskModel, string)
+}
+
 type TodoStoreReader interface {
-	Read(*todo.TaskModel, string)
-	ReadAll(*[]todo.TaskModel, string)
+	Read(*[]todo.TaskModel, string)
 }
 
 type TodoStoreAdder interface {
@@ -47,6 +50,8 @@ type TodoStoreCloser interface {
 }
 
 type TodoStorer interface {
+	TodoStoreScanner
+	TodoStoreReader
 	TodoStoreAdder
 	TodoStoreUpdater
 	TodoStoreDeleter

@@ -8,9 +8,12 @@ import (
 	"gorm.io/gorm"
 )
 
+type StoreScanner interface {
+	Scan(interface{})
+}
+
 type StoreReader interface {
-	Read(interface{})
-	ReadAll() []interface{}
+	Read([]interface{})
 }
 
 type StoreAdder interface {

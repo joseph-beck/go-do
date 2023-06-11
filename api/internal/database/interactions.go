@@ -5,7 +5,7 @@ import (
 	"go-do/pkg/util"
 )
 
-func (s *Store) Read(i interface{}) {
+func (s *Store) Scan(i interface{}) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
@@ -13,7 +13,7 @@ func (s *Store) Read(i interface{}) {
 	util.ErrOut(r.Error)
 }
 
-func (s *Store) ReadAll(i []interface{}) {
+func (s *Store) Read(i []interface{}) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 

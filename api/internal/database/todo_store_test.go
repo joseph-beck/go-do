@@ -17,7 +17,7 @@ func TestTodoStore(t *testing.T) {
 
 func TestTodoStoreRead(t *testing.T) {
 	q := todo.TaskModel{Id: 1}
-	ts.Read(&q, "tasks")
+	ts.Scan(&q, "tasks")
 
 	assert.NotNil(t, q)
 	log.Fatalln(q.Name)

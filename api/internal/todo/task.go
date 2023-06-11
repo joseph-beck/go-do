@@ -3,14 +3,12 @@ package todo
 import "fmt"
 
 type TaskModel struct {
-	Id          int    `json:"id" gorm:"primaryKey"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Complete    bool   `json:"complete"`
-	Deadline    string `json:"deadline"`
+	Id          int    `json:"id" gorm:"primaryKey"` // primary key
+	Name        string `json:"name"`                 // task name
+	Description string `json:"description"`          // task description
+	Complete    bool   `json:"complete"`             // is it complete?
+	Deadline    string `json:"deadline"`             // dd/mm/yyyy-hh:mm
 }
-
-// deadline:"dd/mm/yyyy-hh:mm"
 
 func MakeTaskModel() *TaskModel {
 	return &TaskModel{}
