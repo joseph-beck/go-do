@@ -2,7 +2,6 @@ package app
 
 import (
 	"go-do/internal/router"
-	"go-do/internal/todo"
 	"go-do/pkg/util"
 	"log"
 	"os"
@@ -19,14 +18,7 @@ func Run() {
 	err := godotenv.Load()
 	util.ErrOut(err)
 
-	r = router.MakeRouter()
-
-	t := &todo.TaskModel{
-		Id: 4,
-	}
-	r.Store.Read(t)
-	log.Println(t.Str())
-
+	r = router.MakeRouter("tasks")
 	r.RegisterRoutes(*makeRoutes())
 	r.Run()
 

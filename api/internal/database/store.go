@@ -1,34 +1,32 @@
 package database
 
 import (
-	"fmt"
 	"go-do/pkg/util"
 	"log"
-	"os"
 	"sync"
 
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 type StoreReader interface {
-	Read(i interface{})
+	Read(interface{})
+	ReadAll() []interface{}
 }
 
 type StoreAdder interface {
-	Add(i interface{})
+	Add(interface{})
 }
 
 type StoreUpdater interface {
-	Update(i interface{})
+	Update(interface{})
 }
 
 type StoreDeleter interface {
-	Delete(i interface{})
+	Delete(interface{})
 }
 
 type StoreChecker interface {
-	Check(i interface{}) bool
+	Check(interface{}) bool
 }
 
 type StorePinger interface {
@@ -43,6 +41,10 @@ type StoreDestroyer interface {
 	Destroy() error
 }
 
+type StoreCloser interface {
+	Close()
+}
+
 type Storer interface {
 	StoreAdder
 	StoreUpdater
@@ -50,6 +52,7 @@ type Storer interface {
 	StoreChecker
 	StoreCreator
 	StoreDestroyer
+	StoreCloser
 }
 
 type Store struct {
@@ -75,26 +78,4 @@ func (s *Store) Close() {
 	util.ErrOut(err)
 	err = db.Close()
 	util.ErrOut(err)
-}
-
-func makeDb() *gorm.DB {
-	dsn := fmt.Sprintf(`
-		host=%s 
-		user=%s 
-		password=%s 
-		dbname=%s 
-		port=%s 
-		sslmode=disable 
-		TimeZone=Europe/London`,
-		os.Getenv("DB_ADDR"),
-		os.Getenv("DB_USER"),
-		os.Getenv("DB_PASS"),
-		os.Getenv("DB_NAME"),
-		os.Getenv("DB_PORT"),
-	)
-
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	util.ErrOut(err)
-
-	return db
 }

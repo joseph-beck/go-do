@@ -1,6 +1,13 @@
 package util
 
-import "log"
+import (
+	"errors"
+	"log"
+)
+
+var (
+	ErrTaskConv = errors.New("error converting interface to task")
+)
 
 func ErrOut(err error) {
 	if err != nil {

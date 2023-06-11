@@ -9,7 +9,7 @@ func (s *Store) Read(i interface{}) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
-	r := s.db.Table("tasks").Model(&i).First(&i)
+	r := s.db.Model(&i).First(&i)
 	util.ErrOut(r.Error)
 }
 

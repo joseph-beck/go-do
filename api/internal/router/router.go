@@ -8,13 +8,13 @@ import (
 
 type Router struct {
 	Engine *gin.Engine
-	Store  *database.Store
+	Store  *database.TodoStore
 }
 
-func MakeRouter() *Router {
+func MakeRouter(t string) *Router {
 	return &Router{
 		Engine: gin.Default(),
-		Store:  database.MakeStore(),
+		Store:  database.MakeTodoStore(t),
 	}
 }
 
