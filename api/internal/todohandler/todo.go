@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TodoGet(s database.TodoStoreReader, v database.TodoStoreChecker) gin.HandlerFunc {
+func TodoGet(s database.StoreReader[todo.TaskModel], v database.StoreChecker[todo.TaskModel]) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		q := c.Query("table")
 		if q == "" {

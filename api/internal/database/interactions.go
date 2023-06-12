@@ -5,23 +5,23 @@ import (
 	"go-do/pkg/util"
 )
 
-func (s *Store) Scan(i interface{}) {
+func (s *Store) Scan(i *interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
-	r := s.db.Model(&i).First(&i)
+	r := s.db.Table(table).Model(&i).First(&i)
 	util.ErrOut(r.Error)
 }
 
-func (s *Store) Read(i []interface{}) {
+func (s *Store) Read(i *[]interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
-	r := s.db.Find(&i)
+	r := s.db.Table(table).Find(&i)
 	util.ErrOut(r.Error)
 }
 
-func (s *Store) Add(i interface{}) {
+func (s *Store) Add(i interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
@@ -32,17 +32,17 @@ func (s *Store) Add(i interface{}) {
 	util.ErrOut(r.Error)
 }
 
-func (s *Store) Update(i interface{}) {
+func (s *Store) Update(i interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 }
 
-func (s *Store) Delete(i interface{}) {
+func (s *Store) Delete(i interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 }
 
-func (s *Store) Check(i interface{}) bool {
+func (s *Store) Check(i interface{}, table string) bool {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 

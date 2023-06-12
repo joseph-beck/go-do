@@ -8,28 +8,28 @@ import (
 	"gorm.io/gorm"
 )
 
-type StoreScanner interface {
-	Scan(interface{})
+type StoreScanner[T any] interface {
+	Scan(*T, string)
 }
 
-type StoreReader interface {
-	Read([]interface{})
+type StoreReader[T any] interface {
+	Read(*[]T, string)
 }
 
-type StoreAdder interface {
-	Add(interface{})
+type StoreAdder[T any] interface {
+	Add(T, string)
 }
 
-type StoreUpdater interface {
-	Update(interface{})
+type StoreUpdater[T any] interface {
+	Update(T, string)
 }
 
-type StoreDeleter interface {
-	Delete(interface{})
+type StoreDeleter[T any] interface {
+	Delete(T, string)
 }
 
-type StoreChecker interface {
-	Check(interface{}) bool
+type StoreChecker[T any] interface {
+	Check(T, string) bool
 }
 
 type StorePinger interface {
@@ -48,11 +48,11 @@ type StoreCloser interface {
 	Close()
 }
 
-type Storer interface {
-	StoreAdder
-	StoreUpdater
-	StoreDeleter
-	StoreChecker
+type Storer[T any] interface {
+	StoreAdder[T]
+	StoreUpdater[T]
+	StoreDeleter[T]
+	StoreChecker[T]
 	StoreCreator
 	StoreDestroyer
 	StoreCloser

@@ -3,9 +3,9 @@ package database
 import (
 	"go-do/internal/todo"
 	"log"
+	"reflect"
 	"testing"
 
-	"github.com/joho/godotenv"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,33 +16,26 @@ func TestStore(t *testing.T) {
 	}
 }
 
-func TestStoreRead(t *testing.T) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalln("failed to load env")
-	}
+func TestStoreScan(t *testing.T) {
+	// not really sure if this is working as intended
+	m := todo.TaskModel{Id: 1}
+	q := reflect.ValueOf(m).Interface()
 
-	s := *MakeStore()
+	rs.Scan(&q, "tasks")
+	m = reflect.ValueOf(q).Interface().(todo.TaskModel)
 
-	q := todo.TaskModel{Id: 1}
-	s.Scan(&q)
+	assert.NotNil(t, m)
+	assert.NotNil(t, m.Name)
+	assert.NotNil(t, m.Deadline)
+	assert.NotNil(t, m.Complete)
+}
 
-	assert.NotNil(t, q)
-	log.Fatalln(q.Name)
+func TestScoreRead(t *testing.T) {
+
 }
 
 func TestStoreAdd(t *testing.T) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalln("failed to load env")
-	}
 
-	s := *MakeStore()
-
-	q := todo.TaskModel{
-		Name: "Test Task",
-	}
-	s.Add(q)
 }
 
 func TestStoreUpdate(t *testing.T) {
@@ -54,13 +47,6 @@ func TestStoreDelete(t *testing.T) {
 }
 
 func TestStoreCheck(t *testing.T) {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatalln("failed to load env")
-	}
-
-	s := *MakeStore()
-
-	e := s.Check(todo.MakeTask())
+	e := rs.Check(todo.MakeTask(), "tasks")
 	assert.True(t, e)
 }
