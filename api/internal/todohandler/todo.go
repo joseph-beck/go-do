@@ -31,12 +31,12 @@ func TodoPost(s *database.Store) gin.HandlerFunc {
 
 func TodoPatch(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		
+
 	}
 }
 
 func TodoDelete(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		
+
 	}
 }

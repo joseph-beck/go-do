@@ -23,3 +23,7 @@ func TestMakeDeadline(t *testing.T) {
 		log.Fatalln("Bad deadline conversion for deadline")
 	}
 }
+
+func TestVerifyDeadline(t *testing.T) {
+
+}

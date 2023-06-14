@@ -37,11 +37,11 @@ type StorePinger interface {
 }
 
 type StoreCreator interface {
-	Create() error
+	Create(string) error
 }
 
 type StoreDestroyer interface {
-	Destroy() error
+	Destroy(string) error
 }
 
 type StoreCloser interface {

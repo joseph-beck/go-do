@@ -2,6 +2,7 @@ package app
 
 import (
 	"go-do/internal/router"
+	"go-do/internal/todo"
 	"go-do/pkg/util"
 	"log"
 	"os"
@@ -19,6 +20,12 @@ func Run() {
 	util.ErrOut(err)
 
 	r = router.MakeRouter()
+
+	log.Println("ADDING")
+	a := todo.TaskModel{}
+	r.Store.Add(a, "tasks")
+	log.Println("Done")
+
 	r.RegisterRoutes(*makeRoutes())
 	r.Run()
 

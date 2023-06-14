@@ -2,12 +2,18 @@ package todo
 
 import (
 	"fmt"
+	"go-do/pkg/util"
+	"strconv"
 	"strings"
 )
 
 type Deadline struct {
-	Date Date
-	Time Time
+	Date Date `json:"date"` // date of deadline
+	Time Time `json:"time"` // time of deadline
+}
+
+func (d *Deadline) Verify() bool {
+	return d.Date.Verify() && d.Time.Verify()
 }
 
 type Date struct {
@@ -16,9 +22,27 @@ type Date struct {
 	Year  string `json:"year"`
 }
 
+func (d *Date) Verify() bool {
+	w, err := strconv.Atoi(d.Day)
+	util.ErrLog(err)
+	m, err := strconv.Atoi(d.Month)
+	util.ErrLog(err)
+
+	return w <= 31 && m <= 12
+}
+
 type Time struct {
 	Hour   string `json:"hour"`
 	Minute string `json:"minute"`
+}
+
+func (t *Time) Verify() bool {
+	h, err := strconv.Atoi(t.Hour)
+	util.ErrLog(err)
+	m, err := strconv.Atoi(t.Minute)
+	util.ErrLog(err)
+
+	return h <= 24 && m <= 60
 }
 
 func makeDeadline(s string) *Deadline {

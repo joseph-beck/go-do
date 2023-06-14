@@ -24,10 +24,15 @@ func TestTodoStoreRead(t *testing.T) {
 }
 
 func TestTodoStoreAdd(t *testing.T) {
+	table := "tasks"
 	q := todo.TaskModel{
-		Name: "Test Task",
+		Name: "Another Task",
 	}
-	ts.Add(q, "tasks")
+	ts.Add(q, table)
+	if !ts.Check(q, table) {
+		log.Fatalln("failed to create and add to new table")
+	}
+	//ts.Delete(q, table)
 }
 
 func TestTodoStoreUpdate(t *testing.T) {

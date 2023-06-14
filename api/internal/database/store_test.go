@@ -31,7 +31,7 @@ func TestStoreScan(t *testing.T) {
 }
 
 func TestScoreRead(t *testing.T) {
-
+	
 }
 
 func TestStoreAdd(t *testing.T) {

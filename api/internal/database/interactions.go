@@ -25,8 +25,8 @@ func (s *Store) Add(i interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
-	err := s.Create()
-	util.ErrOut(err)
+	// err := s.Create(nil, nil)
+	// util.ErrOut(err)
 
 	r := s.db.Create(&i)
 	util.ErrOut(r.Error)
@@ -47,6 +47,20 @@ func (s *Store) Check(i interface{}, table string) bool {
 	defer s.dbMu.Unlock()
 
 	return i != nil
+}
+
+func (s *Store) Create(i interface{}, table string) error {
+	s.dbMu.Lock()
+	defer s.dbMu.Unlock()
+
+	return nil
+}
+
+func (s *Store) Destroy(table string) error {
+	s.dbMu.Lock()
+	defer s.dbMu.Unlock()
+
+	return nil
 }
 
 func (s *Store) Ping() error {

@@ -1,6 +1,8 @@
+DOCKER ?= docker
 GO ?= go
 GOFMT ?= gofmt "-s"
 GOFILES := $(shell find . -name "*.go")
+GOMODULES := $(shell go list ./...)
 
 # clean & build
 
@@ -29,17 +31,17 @@ fmt:
 test:
 	$(GO) clean -testcache 
 	$(GO) mod tidy
-	$(GO) test -cover ./...
+	$(GO) test -cover $(GOMODULES)
 
 # deployment
 
 deploy:
-	docker build --tag todo-api .
-	docker run -rm todo-api
+	$(DOCKER) build --tag todo-api .
+	$(DOCKER) run -rm todo-api
 
 tdeploy:
-	docker build --tag todo-api .
-	docker run todo-api
+	$(DOCKER) build --tag todo-api .
+	$(DOCKER) run todo-api
 
 # phony
 
