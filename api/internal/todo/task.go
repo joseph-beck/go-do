@@ -12,7 +12,7 @@ import "fmt"
 type TaskModel struct {
 	Id          int    `gorm:"primaryKey;autoIncrement"`                             // primary key
 	Name        string `gorm:"default:'Task Name';type:varchar(50);not null"`        // task name
-	Description string `gorm:"default:'Task Description';type:text;not null"`         // task description
+	Description string `gorm:"default:'Task Description';type:text;not null"`        // task description
 	Complete    bool   `gorm:"default:false;type:boolean;not null"`                  // is it complete?
 	Deadline    string `gorm:"default:'00/00/0000-00:00';type:varchar(50);not null"` // dd/mm/yyyy-hh:mm
 }

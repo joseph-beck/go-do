@@ -7,7 +7,7 @@ import (
 	"github.com/joho/godotenv"
 )
 
-var rs Store
+var bs BaseStore
 var ts TodoStore
 
 func TestMain(m *testing.M) {
@@ -16,6 +16,6 @@ func TestMain(m *testing.M) {
 		log.Fatalln("failed to load env")
 	}
 
-	rs = *MakeStore()
+	bs = *MakeBaseStore()
 	ts = *MakeTodoStore()
 }

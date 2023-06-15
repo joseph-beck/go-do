@@ -23,19 +23,19 @@ func TodoGet(s database.StoreReader[todo.TaskModel], v database.StoreChecker[tod
 	}
 }
 
-func TodoPost(s *database.Store) gin.HandlerFunc {
+func TodoPost(s database.StoreAdder[todo.TaskModel]) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 	}
 }
 
-func TodoPatch(s *database.Store) gin.HandlerFunc {
+func TodoPatch(s database.StoreUpdater[todo.TaskModel]) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 	}
 }
 
-func TodoDelete(s *database.Store) gin.HandlerFunc {
+func TodoDelete(s database.StoreDeleter[todo.TaskModel]) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 	}

@@ -5,7 +5,7 @@ import (
 	"go-do/pkg/util"
 )
 
-func (s *Store) Scan(i *interface{}, table string) {
+func (s *BaseStore) Scan(i *interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
@@ -13,7 +13,7 @@ func (s *Store) Scan(i *interface{}, table string) {
 	util.ErrOut(r.Error)
 }
 
-func (s *Store) Read(i *[]interface{}, table string) {
+func (s *BaseStore) Read(i *[]interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
@@ -21,49 +21,42 @@ func (s *Store) Read(i *[]interface{}, table string) {
 	util.ErrOut(r.Error)
 }
 
-func (s *Store) Add(i interface{}, table string) {
+func (s *BaseStore) Add(i interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
-
-	// err := s.Create(nil, nil)
-	// util.ErrOut(err)
 
 	r := s.db.Create(&i)
 	util.ErrOut(r.Error)
 }
 
-func (s *Store) Update(i interface{}, table string) {
+func (s *BaseStore) Update(i interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 }
 
-func (s *Store) Delete(i interface{}, table string) {
+func (s *BaseStore) Delete(i interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 }
 
-func (s *Store) Check(i interface{}, table string) bool {
+func (s *BaseStore) Check(i interface{}, table string) bool {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 
 	return i != nil
 }
 
-func (s *Store) Create(i interface{}, table string) error {
+func (s *BaseStore) Create(i interface{}, table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
-
-	return nil
 }
 
-func (s *Store) Destroy(table string) error {
+func (s *BaseStore) Destroy(table string) {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
-
-	return nil
 }
 
-func (s *Store) Ping() error {
+func (s *BaseStore) Ping() error {
 	s.dbMu.Lock()
 	defer s.dbMu.Unlock()
 

@@ -2,7 +2,6 @@ package app
 
 import (
 	"go-do/internal/router"
-	"go-do/internal/todo"
 	"go-do/pkg/util"
 	"log"
 	"os"
@@ -11,8 +10,15 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// Stores the router
 var r *router.Router
 
+// Runs the app
+//
+//   - Creates the router.
+//   - Registers routes.
+//   - Runs the engine.
+//   - Waits for interrupt before shutting down app.
 func Run() {
 	log.Println("Starting app")
 
@@ -20,12 +26,6 @@ func Run() {
 	util.ErrOut(err)
 
 	r = router.MakeRouter()
-
-	log.Println("ADDING")
-	a := todo.TaskModel{}
-	r.Store.Add(a, "tasks")
-	log.Println("Done")
-
 	r.RegisterRoutes(*makeRoutes())
 	r.Run()
 
@@ -37,8 +37,11 @@ func Run() {
 	shutdown()
 }
 
+// Shuts down the app.
+//
+//   - Closes Store if not nil.
 func shutdown() {
-	if r != nil {
+	if r.Store != nil {
 		r.Store.Close()
 	}
 }

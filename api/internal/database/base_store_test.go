@@ -10,7 +10,7 @@ import (
 )
 
 func TestStore(t *testing.T) {
-	err := rs.Ping()
+	err := bs.Ping()
 	if err != nil {
 		log.Fatalln("db failed to connect")
 	}
@@ -21,7 +21,7 @@ func TestStoreScan(t *testing.T) {
 	m := todo.TaskModel{Id: 1}
 	q := reflect.ValueOf(m).Interface()
 
-	rs.Scan(&q, "tasks")
+	bs.Scan(&q, "tasks")
 	m = reflect.ValueOf(q).Interface().(todo.TaskModel)
 
 	assert.NotNil(t, m)
@@ -31,7 +31,7 @@ func TestStoreScan(t *testing.T) {
 }
 
 func TestScoreRead(t *testing.T) {
-	
+
 }
 
 func TestStoreAdd(t *testing.T) {
@@ -47,6 +47,6 @@ func TestStoreDelete(t *testing.T) {
 }
 
 func TestStoreCheck(t *testing.T) {
-	e := rs.Check(todo.MakeTask(), "tasks")
+	e := bs.Check(todo.MakeTask(), "tasks")
 	assert.True(t, e)
 }

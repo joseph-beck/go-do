@@ -24,18 +24,16 @@ func (t *TodoStore) Read(tasks *[]todo.TaskModel, table string) {
 	util.ErrOut(r.Error)
 }
 
-// Adds a task to a given table, if it exists it updates.
-// If table doesn't exist, creates that table.
+// Adds a task to a given table.
 func (t *TodoStore) Add(task todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
 	r := t.db.Table(table).Create(&task)
 	util.ErrOut(r.Error)
-
 }
 
-// Updates a given task model
+// Updates a given task model.
 func (t *TodoStore) Update(task todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
@@ -44,7 +42,7 @@ func (t *TodoStore) Update(task todo.TaskModel, table string) {
 	util.ErrOut(r.Error)
 }
 
-// Deletes a given task model
+// Deletes a given task model.
 func (t *TodoStore) Delete(task todo.TaskModel, table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
@@ -72,26 +70,27 @@ func (t *TodoStore) Check(task todo.TaskModel, table string) bool {
 
 // Creates a table, with the given model as the schema for the table,
 // name of table is given in params
-func (t *TodoStore) Create(table string) error {
+func (t *TodoStore) Create(table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
-	err := t.db.Migrator().CreateTable(&todo.TaskModel{})
+	err := t.db.Table(table).Migrator().CreateTable(&todo.TaskModel{})
 	util.ErrOut(err)
 
 	task := todo.TaskModel{
 		Id: 1,
 	}
 	r := t.db.Table(table).Create(&task)
-	return r.Error
+	util.ErrOut(r.Error)
 }
 
 // Destroy a given table
-func (t *TodoStore) Destroy(table string) error {
+func (t *TodoStore) Destroy(table string) {
 	t.dbMu.Lock()
 	defer t.dbMu.Unlock()
 
-	return nil
+	err := t.db.Table(table).Migrator().DropTable()
+	util.ErrOut(err)
 }
 
 // Ping a database

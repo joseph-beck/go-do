@@ -6,18 +6,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TodoListGet(s *database.Store) gin.HandlerFunc {
+func TodoListGet(s *database.BaseStore) gin.HandlerFunc {
 	return nil
 }
 
-func TodoListPost(s *database.Store) gin.HandlerFunc {
+func TodoListPost(s *database.BaseStore) gin.HandlerFunc {
 	return nil
 }
 
-func TodoListPatch(s *database.Store) gin.HandlerFunc {
+func TodoListPatch(s *database.BaseStore) gin.HandlerFunc {
 	return nil
 }
 
-func TodoListDelete(s *database.Store) gin.HandlerFunc {
+func TodoListDelete(s *database.BaseStore) gin.HandlerFunc {
 	return nil
 }
