@@ -6,8 +6,9 @@ import (
 )
 
 var (
-	ErrTaskConv  = errors.New("error converting interface to task")
-	ErrQueryResp = errors.New("error getting query response")
+	ErrTaskConv             = errors.New("error converting interface to task")
+	ErrQueryResp            = errors.New("error getting query response")
+	ErrUndefinedRouteMethod = errors.New("error, this route method is undefined")
 )
 
 func ErrOut(err error) {
