@@ -2,20 +2,10 @@ package database
 
 import (
 	"go-do/internal/todo"
-	"go-do/pkg/util"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
-
-// Tests the connection to the TodoStore via the Ping method.
-//
-// Ping returns an error, if it is not nil then the Ping has failed.
-// This is checked with the util module.
-func TestTodoStore(t *testing.T) {
-	err := ts.Ping()
-	util.ErrMsg(err, "failed to ping db")
-}
 
 // Tests the Scan method of the TodoStore
 //
@@ -48,7 +38,8 @@ func TestTodoStoreRead(t *testing.T) {
 func TestTodoStoreAdd(t *testing.T) {
 	table := "tasks"
 	q := todo.TaskModel{
-		Name: "Another Task",
+		Id:   123,
+		Name: "Add Task",
 	}
 
 	ts.Add(q, table)
@@ -81,10 +72,27 @@ func TestTodoStoreUpdate(t *testing.T) {
 	ts.Scan(&a, table)
 
 	assert.NotEqual(t, q, a)
+	ts.Delete(a, table)
 }
 
+// Tests the Delete method of the TodoStore.
+//
+// Adds a new task model to the table and then deletes it.
+// assertions are in place for it existing before and after it is deleted.
 func TestTodoStoreDelete(t *testing.T) {
+	table := "tasks"
+	q := todo.TaskModel{
+		Id:   456,
+		Name: "Delete Task",
+	}
 
+	ts.Add(q, table)
+	e := ts.Check(q, table)
+	assert.True(t, e)
+
+	ts.Delete(q, table)
+	e = ts.Check(q, table)
+	assert.False(t, e)
 }
 
 // Tests the Check method from the TodoStore.

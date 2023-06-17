@@ -9,8 +9,11 @@ import (
 )
 
 // TodoStore stores a pointer to a gorm database and a mutex.
-// 
-// The mutex is used to prevent data races when using the TodoStore with go routines.
+//
+// The mutex is used to prevent data races.
+//
+//   - db : pointer to gorm DB.
+//   - dbMu : db mutex.
 type TodoStore struct {
 	db   *gorm.DB
 	dbMu sync.Mutex

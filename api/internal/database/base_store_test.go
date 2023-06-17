@@ -2,19 +2,11 @@ package database
 
 import (
 	"go-do/internal/todo"
-	"log"
 	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
-
-func TestStore(t *testing.T) {
-	err := bs.Ping()
-	if err != nil {
-		log.Fatalln("db failed to connect")
-	}
-}
 
 func TestStoreScan(t *testing.T) {
 	// not really sure if this is working as intended
