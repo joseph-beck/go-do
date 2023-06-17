@@ -12,16 +12,16 @@ func makeRoutes() *router.Routes {
 			{
 				Name:        "GetPing",
 				Method:      router.Get,
-				Path:        "/",
-				Handler:     "ping",
+				Path:        "/ping",
+				Handler:     "",
 				HandlerFunc: pinghandler.PingGet(r.Store),
 			},
 			{
 				Name:        "GetTodo",
 				Method:      router.Get,
-				Path:        "/",
-				Handler:     "todo",
-				HandlerFunc: todohandler.TodoGet(r.Store, r.Store),
+				Path:        "/todo",
+				Handler:     "",
+				HandlerFunc: todohandler.TodoGet(r.Store),
 			},
 		},
 	}

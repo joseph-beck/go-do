@@ -59,6 +59,14 @@ type StoreCloser interface {
 	Close()
 }
 
+type StoreGetter[T any] interface {
+	StoreScanner[T]
+	StoreReader[T]
+	StoreChecker[T]
+	StorePinger
+}
+
+
 // Interface for a Store.
 //
 //   - Adder : adds an interface.

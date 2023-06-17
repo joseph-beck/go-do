@@ -7,7 +7,7 @@ import (
 )
 
 func TestTodoGet(t *testing.T) {
-	p := TodoGet(nil, nil)
+	p := TodoGet(nil)
 
 	assert.NotNil(t, p)
 }
