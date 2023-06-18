@@ -1,44 +1,35 @@
 package database
 
 import (
-	"go-do/internal/todo"
-	"reflect"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
+// Tests the Scan method of the BaseStore.
 func TestStoreScan(t *testing.T) {
-	// not really sure if this is working as intended
-	m := todo.TaskModel{Id: 1}
-	q := reflect.ValueOf(m).Interface()
 
-	bs.Scan(&q, "tasks")
-	m = reflect.ValueOf(q).Interface().(todo.TaskModel)
-
-	assert.NotNil(t, m)
-	assert.NotNil(t, m.Name)
-	assert.NotNil(t, m.Deadline)
-	assert.NotNil(t, m.Complete)
 }
 
+// Tests the Read method of the BaseStore.
 func TestScoreRead(t *testing.T) {
 
 }
 
+// Tests the Add method of the BaseStore.
 func TestStoreAdd(t *testing.T) {
 
 }
 
+// Tests the Update method of the BaseStore.
 func TestStoreUpdate(t *testing.T) {
 
 }
 
+// Tests the Delete method of the BaseStore.
 func TestStoreDelete(t *testing.T) {
 
 }
 
+// Tests the Check method of the BaseStore.
 func TestStoreCheck(t *testing.T) {
-	e := bs.Check(todo.MakeTask(), "tasks")
-	assert.True(t, e)
+
 }

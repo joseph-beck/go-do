@@ -77,9 +77,7 @@ func (t *TodoStore) Create(table string) {
 	err := t.db.Table(table).Migrator().CreateTable(&todo.TaskModel{})
 	util.ErrFat(err)
 
-	task := todo.TaskModel{
-		Id: 1,
-	}
+	task := todo.TaskModel{}
 	r := t.db.Table(table).Create(&task)
 	util.ErrFat(r.Error)
 }

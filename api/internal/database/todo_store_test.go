@@ -31,7 +31,7 @@ func TestTodoStoreRead(t *testing.T) {
 	assert.NotEmpty(t, tasks)
 }
 
-// Tests the Add method from the TodoStore.
+// Tests the Add method of the TodoStore.
 //
 // It creates a new TaskModel, with only a name.
 // This is then added, checked if it exists and then deleted.
@@ -49,7 +49,7 @@ func TestTodoStoreAdd(t *testing.T) {
 	ts.Delete(q, table)
 }
 
-// Tests the Update method from the TodoStore.
+// Tests the Update method of the TodoStore.
 //
 // Checks against the first added value and the updated value,
 // if they are not equal the update has been successful.
@@ -95,7 +95,7 @@ func TestTodoStoreDelete(t *testing.T) {
 	assert.False(t, e)
 }
 
-// Tests the Check method from the TodoStore.
+// Tests the Check method of the TodoStore.
 //
 // Check returns a boolean value based on whether the queried Id exists.
 func TestTodoStoreCheck(t *testing.T) {
