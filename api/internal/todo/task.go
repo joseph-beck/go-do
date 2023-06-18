@@ -3,7 +3,6 @@ package todo
 import "fmt"
 
 // Gorm model for the Task:
-//
 //   - `Id` : id of task, primary key & auto increment.
 //   - `Name` : name of the task, defaults to "Task Name", varchar(50) & not null.
 //   - `Description` : description of task, defaults to "Task Description", text & not null.
@@ -46,7 +45,6 @@ func (t *TaskModel) Str() string {
 }
 
 // Task struct:
-//
 //   - `Id` : id of task.
 //   - `Name` : name of the task.
 //   - `Description` : description of task.
