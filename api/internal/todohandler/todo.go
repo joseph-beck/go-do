@@ -50,6 +50,30 @@ func TodoGet(
 	}
 }
 
+// TodoPost is the HandlerFunc for posting a Task to the database.
+//
+// The Task is posted to the given table.
+//
+// Example usage:
+//
+//   - /todo?table=tasks : this is the html query for this function
+//     however the body of the request must contain the Task submitted.
+//
+//   - body :
+//
+//     {
+//
+//     "name" : "Example Task",
+//
+//     "description" : "This is an Example Task",
+//
+//     "complete" : false,
+//
+//     "deadline" : "00/00/0000-00:00"
+//
+//     }
+//
+//     an id can also be given if the sender wishes to specify this.
 func TodoPost(
 	s database.Storer[todo.TaskModel],
 ) gin.HandlerFunc {
@@ -70,6 +94,32 @@ func TodoPost(
 	}
 }
 
+// TodoPost is the HandlerFunc for patching a Task already in the database.
+//
+// The table is given and the body is used to patch.
+//
+// Example usage:
+//
+//   - /todo?table=tasks : this is the html query for this function
+//     however the body of the request must contain the Task submitted.
+//
+//   - body :
+//
+//     {
+//
+//     "id" : 70,
+//
+//     "name" : "Example Task",
+//
+//     "description" : "This is an Example Task",
+//
+//     "complete" : false,
+//
+//     "deadline" : "00/00/0000-00:00"
+//
+//     }
+//
+//     an id must be given here otherwise a StatusBadRequest will be given.
 func TodoPatch(
 	s database.Storer[todo.TaskModel],
 ) gin.HandlerFunc {
