@@ -59,8 +59,7 @@ type StoreCloser interface {
 	Close()
 }
 
-// Interface for a Store.
-//
+// Interface for a Store:
 //   - Adder : adds an interface.
 //   - Updater : updates an interface.
 //   - Deleter : deletes an interface.
@@ -87,7 +86,6 @@ type Storer[T any] interface {
 // A connection is then opened, checked for errors and returned.
 //
 // Keys for environmental variables:
-//
 //   - DB_ADDR : stores the address (IP)
 //   - DB_PORT : stores the port
 //   - DB_USER : stores the username
