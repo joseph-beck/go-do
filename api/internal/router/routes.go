@@ -12,15 +12,15 @@ import (
 //   - HandlerFunc : gin.Handlerfunc,
 //     stores the method that occurs when this route is queried.
 type Route struct {
-	Name        string
-	Method      Method
-	Path        string
-	Handler     string
-	HandlerFunc gin.HandlerFunc
+	Name        string          // Route name
+	Method      Method          // Route method
+	Path        string          // Route path
+	Handler     string          // Route Handler
+	HandlerFunc gin.HandlerFunc // Route Handler Function
 }
 
 // Routes stores a slice of the Route struct.
 //   - RouteInfo : slice of Route structs.
 type Routes struct {
-	RouteInfo []Route
+	RouteInfo []Route // Routes-
 }

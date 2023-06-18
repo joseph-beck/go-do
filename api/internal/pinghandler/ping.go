@@ -13,6 +13,9 @@ import (
 //
 // Pings the database, if no error is returned the response is ping : pong,
 // otherwise it is ping : boom.
+//
+// Example usage:
+//   - /ping : returns as stated above.
 func PingGet(p database.StorePinger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		err := p.Ping()

@@ -29,7 +29,7 @@ func (t *TaskModel) ToTask() *Task {
 		Name:        t.Name,
 		Description: t.Description,
 		Complete:    t.Complete,
-		Deadline:    *makeDeadline(t.Deadline),
+		Deadline:    makeDeadline(t.Deadline),
 	}
 }
 
