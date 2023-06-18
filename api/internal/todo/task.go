@@ -16,14 +16,14 @@ type TaskModel struct {
 	Deadline    string `gorm:"default:'00/00/0000-00:00';type:varchar(50);not null"` // dd/mm/yyyy-hh:mm
 }
 
-// Makes a pointer to an empty task model.
-func MakeTaskModel() *TaskModel {
-	return &TaskModel{}
+// Makes and returns an empty TaskModel.
+func MakeTaskModel() TaskModel {
+	return TaskModel{}
 }
 
-// Converts a task model to struct Task.
-func (t *TaskModel) ToTask() *Task {
-	return &Task{
+// Converts a TaskModel to struct Task.
+func (t *TaskModel) ToTask() Task {
+	return Task{
 		Id:          t.Id,
 		Name:        t.Name,
 		Description: t.Description,
@@ -32,8 +32,53 @@ func (t *TaskModel) ToTask() *Task {
 	}
 }
 
-// Returns a string that represents this task model.
+// Returns a string that represents this TaskModel.
 func (t *TaskModel) Str() string {
+	return fmt.Sprintf(
+		"%d, %s, %s, %t, %s",
+		t.Id,
+		t.Name,
+		t.Description,
+		t.Complete,
+		t.Deadline,
+	)
+}
+
+// This struct is used for Posting and Patching Tasks,
+// this is then often converted to a TaskModel which is used in the store.
+//
+// TaskPost struct:
+//   - `Id` : id of task.
+//   - `Name` : name of the task.
+//   - `Description` : description of task.
+//   - `Complete` : is task complete?
+//   - `Deadline` : deadline of the task.
+type TaskPost struct {
+	Id          int    `json:"id"`          // task id as int
+	Name        string `json:"name"`        // task name as string
+	Description string `json:"description"` // task description as string
+	Complete    bool   `json:"complete"`    // is task complete as bool
+	Deadline    string `json:"deadline"`    // task deadline as string
+}
+
+// Makes and returns an empty TaskModel.
+func MakeTaskPost() TaskPost {
+	return TaskPost{}
+}
+
+// Converts a TaskPost to struct TaskModel.
+func (t *TaskPost) ToTaskModel() TaskModel {
+	return TaskModel{
+		Id:          t.Id,
+		Name:        t.Name,
+		Description: t.Description,
+		Complete:    t.Complete,
+		Deadline:    t.Deadline,
+	}
+}
+
+// Returns a string that represents this TaskPost.
+func (t *TaskPost) Str() string {
 	return fmt.Sprintf(
 		"%d, %s, %s, %t, %s",
 		t.Id,
@@ -58,14 +103,14 @@ type Task struct {
 	Deadline    Deadline `json:"deadline"`    // task deadline, more data within
 }
 
-// Makes a pointer to an empty task
-func MakeTask() *Task {
-	return &Task{}
+// Makes and returns an empty Task struct
+func MakeTask() Task {
+	return Task{}
 }
 
 // Converts a task to struct TaskModel, which is used with gorm.
-func (t *Task) ToTaskModel() *TaskModel {
-	return &TaskModel{
+func (t *Task) ToTaskModel() TaskModel {
+	return TaskModel{
 		Id:          t.Id,
 		Name:        t.Name,
 		Description: t.Description,

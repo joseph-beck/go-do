@@ -51,18 +51,48 @@ func TodoGet(
 }
 
 func TodoPost(
-	s database.StoreAdder[todo.TaskModel],
+	s database.Storer[todo.TaskModel],
 ) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		t := c.Query("table")
 
+		if !s.Check(todo.TaskModel{Id: 0}, t) {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		b := todo.TaskPost{}
+		c.Bind(&b)
+		q := b.ToTaskModel()
+		s.Add(q, t)
+
+		c.Status(http.StatusNoContent)
 	}
 }
 
 func TodoPatch(
-	s database.StoreUpdater[todo.TaskModel],
+	s database.Storer[todo.TaskModel],
 ) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		t := c.Query("table")
 
+		if !s.Check(todo.TaskModel{Id: 0}, t) {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		b := todo.TaskPost{}
+		c.Bind(&b)
+		q := b.ToTaskModel()
+
+		if !s.Check(q, t) {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		s.Update(q, t)
+
+		c.Status(http.StatusNoContent)
 	}
 }
 
