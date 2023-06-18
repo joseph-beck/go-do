@@ -12,7 +12,7 @@ func (t *TodoStore) Scan(task *todo.TaskModel, table string) {
 	defer t.dbMu.Unlock()
 
 	r := t.db.Table(table).Model(&task).First(&task)
-	util.ErrOut(r.Error)
+	util.ErrFat(r.Error)
 }
 
 // Reads all of the tasks into a given slice of task models.
@@ -21,7 +21,7 @@ func (t *TodoStore) Read(tasks *[]todo.TaskModel, table string) {
 	defer t.dbMu.Unlock()
 
 	r := t.db.Table(table).Find(&tasks)
-	util.ErrOut(r.Error)
+	util.ErrFat(r.Error)
 }
 
 // Adds a task to a given table.
@@ -30,7 +30,7 @@ func (t *TodoStore) Add(task todo.TaskModel, table string) {
 	defer t.dbMu.Unlock()
 
 	r := t.db.Table(table).Create(&task)
-	util.ErrOut(r.Error)
+	util.ErrFat(r.Error)
 }
 
 // Updates a given task model.
@@ -39,7 +39,7 @@ func (t *TodoStore) Update(task todo.TaskModel, table string) {
 	defer t.dbMu.Unlock()
 
 	r := t.db.Table(table).Save(&task)
-	util.ErrOut(r.Error)
+	util.ErrFat(r.Error)
 }
 
 // Deletes a given task model.
@@ -48,7 +48,7 @@ func (t *TodoStore) Delete(task todo.TaskModel, table string) {
 	defer t.dbMu.Unlock()
 
 	r := t.db.Table(table).Delete(&task)
-	util.ErrOut(r.Error)
+	util.ErrFat(r.Error)
 }
 
 // Used to check whether a given task exists.
@@ -75,13 +75,13 @@ func (t *TodoStore) Create(table string) {
 	defer t.dbMu.Unlock()
 
 	err := t.db.Table(table).Migrator().CreateTable(&todo.TaskModel{})
-	util.ErrOut(err)
+	util.ErrFat(err)
 
 	task := todo.TaskModel{
 		Id: 1,
 	}
 	r := t.db.Table(table).Create(&task)
-	util.ErrOut(r.Error)
+	util.ErrFat(r.Error)
 }
 
 // Destroy a given table
@@ -90,7 +90,7 @@ func (t *TodoStore) Destroy(table string) {
 	defer t.dbMu.Unlock()
 
 	err := t.db.Table(table).Migrator().DropTable()
-	util.ErrOut(err)
+	util.ErrFat(err)
 }
 
 // Ping a database

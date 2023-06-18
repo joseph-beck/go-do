@@ -59,14 +59,6 @@ type StoreCloser interface {
 	Close()
 }
 
-type StoreGetter[T any] interface {
-	StoreScanner[T]
-	StoreReader[T]
-	StoreChecker[T]
-	StorePinger
-}
-
-
 // Interface for a Store.
 //
 //   - Adder : adds an interface.
@@ -77,6 +69,8 @@ type StoreGetter[T any] interface {
 //   - Destroyer : destroys a table.
 //   - Closer : closes a store.
 type Storer[T any] interface {
+	StoreScanner[T]
+	StoreReader[T]
 	StoreAdder[T]
 	StoreUpdater[T]
 	StoreDeleter[T]
