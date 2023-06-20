@@ -36,7 +36,9 @@ func TodoGet(
 
 		q := c.Query("id")
 		i, err := strconv.Atoi(q)
-		util.ErrLog(err)
+		if err != nil {
+			i = 0
+		}
 
 		if i != 0 {
 			u := todo.TaskModel{Id: i}
