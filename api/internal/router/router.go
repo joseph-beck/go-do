@@ -25,6 +25,10 @@ func MakeRouter() *Router {
 	}
 }
 
+func (r *Router) NoRoute(f gin.HandlerFunc) {
+	r.Engine.NoRoute(f)
+}
+
 // Wrapper for the gin engine Run method.
 func (r *Router) Run() {
 	r.Engine.Run()

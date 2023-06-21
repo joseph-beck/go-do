@@ -27,6 +27,7 @@ func Run() {
 
 	r = router.MakeRouter()
 	r.RegisterRoutes(*makeRoutes())
+	r.NoRoute(reverseProxy())
 	r.Run()
 
 	stop := make(chan os.Signal, 1)

@@ -24,7 +24,7 @@ func PingGet(p database.StorePinger) gin.HandlerFunc {
 			r = "boom"
 		}
 
-		c.JSON(http.StatusOK, map[string]string{
+		c.JSON(http.StatusOK, gin.H{
 			"ping": r,
 		})
 	}

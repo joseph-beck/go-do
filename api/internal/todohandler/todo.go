@@ -22,6 +22,8 @@ func TodoGet(
 	s database.Storer[todo.TaskModel],
 ) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		c.Header("Content-Type", "application/json")
+
 		l := make([]todo.TaskModel, 0)
 
 		t := c.Query("table")

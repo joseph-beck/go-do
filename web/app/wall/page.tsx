@@ -1,29 +1,27 @@
-//"use client";
-
+import getAllTasks from "@/lib/api/getTask";
 import React from "react";
 
-type Todo = {
-  id: number;
-  name: string;
-  description: string;
-  complete: boolean;
-  deadline: string;
-};
-
 export default async function Page() {
-  const response = await fetch("http://localhost:8080/todo?table=tasks", {
-    method: "GET",
-  });
-  const todos: Todo[] = await response.json();
-  const todoMap = todos.map((todo: Todo, index: number) => <li key={`list item ${index}`}>{todo.name} : {todo.description}</li>);
+  const taskData: Promise<Task[]> = getAllTasks();
+  const tasks = await taskData;
 
-  return (
+  console.log(tasks)
+
+  const content = (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <h1>Hello</h1>
 
-        <ul key="list">
-          {todoMap}
-        </ul>
+        {tasks.map(task => {
+          return (
+            <>
+              <p key={task.Id}>
+                {task.Name} : {task.Description} : {task.Deadline}
+              </p>
+            </>
+          );
+        })}
       </main>
   );
+
+  return content;
 }
