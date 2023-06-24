@@ -1,8 +1,7 @@
-import getAllTasks from "@/lib/api/getTask";
-import React from "react";
+import { getAllTasks } from "@/lib/api/getTask";
 
 export default async function Page() {
-  const taskData: Promise<Task[]> = getAllTasks();
+  const taskData: Promise<Task[]> = getAllTasks("tasks");
   const tasks = await taskData;
 
   console.log(tasks)
