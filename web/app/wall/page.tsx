@@ -1,4 +1,5 @@
 import { getAllTasks } from "@/lib/api/getTask";
+import Link from "next/link";
 
 export default async function Page() {
   const taskData: Promise<Task[]> = getAllTasks("tasks");
@@ -12,11 +13,7 @@ export default async function Page() {
 
         {tasks.map(task => {
           return (
-            <>
-              <p key={task.Id}>
-                {task.Name} : {task.Description} : {task.Deadline}
-              </p>
-            </>
+            makeTaskCard(task)
           );
         })}
       </main>
@@ -24,3 +21,13 @@ export default async function Page() {
 
   return content;
 }
+
+const makeTaskCard = (task: Task): JSX.Element => {
+  return (
+    <Link 
+      href={`/wall/${task.Id}`}
+    >
+      {task.Name} : {task.Description} : {task.Deadline}
+    </Link>
+  );
+};
