@@ -1,3 +1,6 @@
+create database godo;
+\c godo;
+
 create table public.tasks
 (
     id          serial

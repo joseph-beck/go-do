@@ -1,4 +1,6 @@
 DOCKER ?= docker
+DOCKERCOMPOSE ?= docker-compose 
+
 GO ?= go
 GOFMT ?= gofmt "-s"
 GOFILES := $(shell find . -name "*.go")
@@ -43,6 +45,9 @@ tdeploy:
 	$(DOCKER) build --tag todo-api .
 	$(DOCKER) run todo-api
 
+compose:
+	$(DOCKERCOMPOSE) up -d
+
 # phony
 
-.PHONY: clean build run dev fmt test deploy tdeploy
+.PHONY: clean build run dev fmt test deploy tdeploy compose
