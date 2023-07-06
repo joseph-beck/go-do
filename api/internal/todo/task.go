@@ -32,6 +32,17 @@ func (t *TaskModel) ToTask() Task {
 	}
 }
 
+// Converts a TaskModel to struct Task.
+func (t *TaskModel) ToTaskPost() TaskPost {
+	return TaskPost{
+		Id:          t.Id,
+		Name:        t.Name,
+		Description: t.Description,
+		Complete:    t.Complete,
+		Deadline:    t.Deadline,
+	}
+}
+
 // Returns a string that represents this TaskModel.
 func (t *TaskModel) Str() string {
 	return fmt.Sprintf(

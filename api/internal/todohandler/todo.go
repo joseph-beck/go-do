@@ -24,7 +24,8 @@ func TodoGet(
 	return func(c *gin.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := make([]todo.TaskModel, 0)
+		m := make([]todo.TaskModel, 0)
+		l := make([]todo.TaskPost, 0)
 
 		t := c.Query("table")
 		if t == "" {
@@ -45,9 +46,13 @@ func TodoGet(
 		if i != 0 {
 			u := todo.TaskModel{Id: i}
 			s.Scan(&u, t)
-			l = append(l, u)
+			m = append(m, u)
 		} else {
-			s.Read(&l, t)
+			s.Read(&m, t)
+		}
+
+		for _, task := range m {
+			l = append(l, task.ToTaskPost())
 		}
 
 		c.JSON(http.StatusOK, l)
