@@ -1,9 +1,11 @@
-export async function postTask(table: string, task: Task) {
+import { User } from "@/lib/user/types/user";
+
+export async function postUser(user: User) {
   const response = await fetch(
-    `http://localhost:8080/todo?table=${table}`,
+    `http://localhost:8080/user`,
     {
       method: "POST",
-      body: null,  
+      body: null, // TODO: fix
     },    
   );
 

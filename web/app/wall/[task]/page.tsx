@@ -1,4 +1,5 @@
-import { getTask } from "@/lib/api/getTask";
+import { getTask } from "@/lib/task/api/getTask";
+import { Task } from "@/lib/task/types/task";
 import Link from "next/link";
 
 type Params = {

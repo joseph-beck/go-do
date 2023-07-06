@@ -1,3 +1,5 @@
+import { Task } from "@/lib/task/types/task";
+
 export async function getAllTasks(table: string): Promise<Task[]> {
   const response = await fetch(
     `http://localhost:8080/todo?table=${table}`, 
