@@ -1,33 +1,52 @@
+'use client';
+
 import { getAllTasks } from "@/lib/task/api/getTask";
-import { Task } from "@/lib/task/types/task";
+import { TaskPost } from "@/lib/task/types/task";
 import Link from "next/link";
 
 export default async function Page() {
-  const taskData: Promise<Task[]> = getAllTasks("tasks");
+  const taskData: Promise<TaskPost[]> = getAllTasks("tasks");
   const tasks = await taskData;
 
   const content = (
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <h1>Hello</h1>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <h1>Hello</h1>
 
-        {tasks.map(task => {
-          return (
-            makeTaskCard(task)
-          );
-        })}
-      </main>
+      <button
+        onClick={createForm}
+        className="flex top-0 left-0"
+      >
+        Create
+      </button>
+
+      {tasks.map(task => {
+        return (
+          taskCard(task)
+        );
+      })}
+    </main>
   );
 
   return content;
 }
 
-const makeTaskCard = (task: Task): JSX.Element => {
+const taskCard = (task: TaskPost): JSX.Element => {
   return (
     <Link 
-      href={`/wall/${task.Id}`}
-      key={task.Id}
+      href={`/wall/${task.id}`}
+      key={task.id}
     >
-      {task.Name} : {task.Description} : {task.Deadline}
+      {task.name} : {task.description} : {task.deadline}
     </Link>
+  );
+};
+
+const createForm = (): JSX.Element => {
+  console.log("create form")
+
+  return (
+    <form>
+      
+    </form>
   );
 };

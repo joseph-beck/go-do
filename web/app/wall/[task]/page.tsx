@@ -1,5 +1,5 @@
 import { getTask } from "@/lib/task/api/getTask";
-import { Task } from "@/lib/task/types/task";
+import { TaskPost } from "@/lib/task/types/task";
 import Link from "next/link";
 
 type Params = {
@@ -26,10 +26,38 @@ export default async function Page({ params: { Table, Id } }: Params) {
   return content;
 }
 
-const makeTaskCard = (task: Task): JSX.Element => {
+const makeTaskCard = (task: TaskPost): JSX.Element => {
   return (
     <Link href={`/wall`}>
-      {task.Name} : {task.Description} : {task.Deadline}
+      {task.name} : {task.description} : {task.deadline}
     </Link>
+  );
+};
+
+const makeEditButton = (): JSX.Element => {
+  const click = () => {
+    console.log("edit");
+  };
+
+  return (
+    <button
+      onClick={click}
+    >
+      Edit
+    </button>
+  );
+};
+
+const makeDeleteButton = (): JSX.Element => {
+  const click = () => {
+    console.log("delete");
+  };
+
+  return (
+    <button
+      onClick={click}
+    >
+      Delete
+    </button>
   );
 };

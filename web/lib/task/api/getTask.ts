@@ -1,6 +1,6 @@
-import { Task } from "@/lib/task/types/task";
+import { TaskPost } from "@/lib/task/types/task";
 
-export async function getAllTasks(table: string): Promise<Task[]> {
+export async function getAllTasks(table: string): Promise<TaskPost[]> {
   const response = await fetch(
     `http://localhost:8080/todo?table=${table}`, 
     {
@@ -13,7 +13,7 @@ export async function getAllTasks(table: string): Promise<Task[]> {
   return response.json();
 }
 
-export async function getTask(table: string, id: number) : Promise<Task> {
+export async function getTask(table: string, id: number) : Promise<TaskPost> {
   const response = await fetch(
     `http://localhost:8080/todo?table=${table}&id=${id}`, 
     {
