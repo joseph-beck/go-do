@@ -1,6 +1,7 @@
 package app
 
 import (
+	"go-do/internal/database"
 	"go-do/internal/router"
 	"go-do/pkg/util"
 	"log"
@@ -12,6 +13,8 @@ import (
 
 // Stores the router
 var r *router.Router
+
+var s *database.Store
 
 // Runs the app
 //
@@ -25,8 +28,10 @@ func Run() {
 	err := godotenv.Load()
 	util.ErrOut(err)
 
+	s = database.MakeStore()
+
 	r = router.MakeRouter()
-	r.RegisterRoutes(*makeRoutes())
+	r.RegisterRoutes(makeRoutes())
 	r.NoRoute(reverseProxy())
 	r.Run()
 
@@ -42,7 +47,7 @@ func Run() {
 //
 //   - Closes Store if not nil.
 func shutdown() {
-	if r.Store != nil {
-		r.Store.Close()
+	if s != nil {
+		s.Close()
 	}
 }

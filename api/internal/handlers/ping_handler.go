@@ -1,4 +1,4 @@
-package pinghandler
+package handlers
 
 import (
 	"go-do/internal/database"
@@ -16,9 +16,9 @@ import (
 //
 // Example usage:
 //   - /ping : returns as stated above.
-func PingGet(p database.StorePinger) gin.HandlerFunc {
+func PingGet(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		err := p.Ping()
+		err := s.Ping()
 		r := "pong"
 		if err != nil {
 			r = "boom"

@@ -1,9 +1,8 @@
 package app
 
 import (
-	"go-do/internal/pinghandler"
+	"go-do/internal/handlers"
 	"go-do/internal/router"
-	"go-do/internal/todohandler"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
@@ -13,46 +12,61 @@ import (
 
 // The makeRoutes method returns a pointer to a Routes struct,
 // which stores a slice of Route.
-func makeRoutes() *router.Routes {
-	return &router.Routes{
+func makeRoutes() router.Routes {
+	return router.Routes{
 		RouteInfo: []router.Route{
 			// Ping Handlers
 			{
-				Name:        "GetPing",
+				Name:        "Get Ping",
 				Method:      router.Get,
 				Path:        "/ping",
 				Handler:     "",
-				HandlerFunc: pinghandler.PingGet(r.Store),
+				HandlerFunc: handlers.PingGet(s),
 			},
-			// Todo Handlers
+			// Task Handlers
 			{
-				Name:        "GetTodo",
+				Name:        "List Task",
 				Method:      router.Get,
-				Path:        "/todo",
-				Handler:     "",
-				HandlerFunc: todohandler.TodoGet(r.Store),
+				Path:        "/task",
+				Handler:     "/:list",
+				HandlerFunc: handlers.TaskList(s),
 			},
 			{
-				Name:        "PostTodo",
+				Name:        "Get Task",
+				Method:      router.Get,
+				Path:        "/task",
+				Handler:     "/:list/:task",
+				HandlerFunc: handlers.TaskGet(s),
+			},
+			{
+				Name:        "Post Task",
 				Method:      router.Post,
-				Path:        "/todo",
-				Handler:     "",
-				HandlerFunc: todohandler.TodoPost(r.Store),
+				Path:        "/task",
+				Handler:     "/:list",
+				HandlerFunc: handlers.TaskPost(s),
 			},
 			{
-				Name:        "PatchTodo",
+				Name:        "Put Task",
+				Method:      router.Put,
+				Path:        "/task",
+				Handler:     "/:list",
+				HandlerFunc: handlers.TaskPut(s),
+			},
+			{
+				Name:        "Patch Task",
 				Method:      router.Patch,
-				Path:        "/todo",
-				Handler:     "",
-				HandlerFunc: todohandler.TodoPatch(r.Store),
+				Path:        "/task",
+				Handler:     "/:list",
+				HandlerFunc: handlers.TaskPatch(s),
 			},
 			{
-				Name:        "DeleteTodo",
+				Name:        "Delete Task",
 				Method:      router.Delete,
-				Path:        "/todo",
-				Handler:     "",
-				HandlerFunc: todohandler.TodoDelete(r.Store),
+				Path:        "/task",
+				Handler:     "/:list/:task",
+				HandlerFunc: handlers.TaskDelete(s),
 			},
+			// User Handlers
 		},
 	}
 }

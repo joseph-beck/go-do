@@ -1,4 +1,4 @@
-package user
+package models
 
 type UserModel struct {
 	Id   int

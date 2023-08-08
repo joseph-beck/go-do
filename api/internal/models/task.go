@@ -1,4 +1,4 @@
-package todo
+package models
 
 import "fmt"
 
@@ -39,7 +39,7 @@ func (t *TaskModel) ToTaskPost() TaskPost {
 		Name:        t.Name,
 		Description: t.Description,
 		Complete:    t.Complete,
-		Deadline:    t.Deadline,
+		Deadline:    makeDeadline(t.Deadline),
 	}
 }
 
@@ -65,11 +65,11 @@ func (t *TaskModel) Str() string {
 //   - `Complete` : is task complete?
 //   - `Deadline` : deadline of the task.
 type TaskPost struct {
-	Id          int    `json:"id"`          // task id as int
-	Name        string `json:"name"`        // task name as string
-	Description string `json:"description"` // task description as string
-	Complete    bool   `json:"complete"`    // is task complete as bool
-	Deadline    string `json:"deadline"`    // task deadline as string
+	Id          int      `json:"id"`          // task id as int
+	Name        string   `json:"name"`        // task name as string
+	Description string   `json:"description"` // task description as string
+	Complete    bool     `json:"complete"`    // is task complete as bool
+	Deadline    Deadline `json:"deadline"`    // deadline of the task
 }
 
 // Makes and returns an empty TaskModel.
@@ -84,7 +84,7 @@ func (t *TaskPost) ToTaskModel() TaskModel {
 		Name:        t.Name,
 		Description: t.Description,
 		Complete:    t.Complete,
-		Deadline:    t.Deadline,
+		Deadline:    t.Deadline.Str(),
 	}
 }
 
