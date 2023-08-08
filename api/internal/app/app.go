@@ -30,7 +30,7 @@ func Run() {
 
 	s = database.MakeStore()
 
-	r = router.MakeRouter()
+	r = router.New()
 	r.RegisterRoutes(makeRoutes())
 	r.NoRoute(reverseProxy())
 	r.Run()

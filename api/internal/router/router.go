@@ -15,8 +15,7 @@ type Router struct {
 
 // Returns a pointer to a default router.
 //   - Engine : default gin router.
-//   - Store : default store using env variables for db connection.
-func MakeRouter() *Router {
+func New() *Router {
 	return &Router{
 		Engine: gin.Default(),
 	}
