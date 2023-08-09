@@ -10,15 +10,16 @@ type Params = {
 };
 
 export default async function Page({ params: { Table, Id } }: Params) {
-  //const taskData: Promise<Task> = getTask(Table, Id);
-  //const task = await taskData;
-  //console.log(task);
+  console.log(Table, Id)
+  // const taskData: Promise<Task> = getTask("tasks", Id);
+  // const task = await taskData;
+  // console.log(task);
 
   const content = (
       <main className="flex min-h-screen flex-col items-center justify-between p-24">
         <h1>Task {Id} {Table}</h1>
 
-        {/* {makeTaskCard(task)} */}
+        {/* { makeTaskCard(task) } */}
       </main>
   );
 
@@ -27,9 +28,10 @@ export default async function Page({ params: { Table, Id } }: Params) {
 
 const makeTaskCard = (task: Task): JSX.Element => {
   return (
-    <Link href={`/wall`}>
-      {task.name} : {task.description}
-    </Link>
+    <div>
+      <h1>{task.name}</h1>
+      <p>{task.description}</p>
+    </div>
   );
 };
 
