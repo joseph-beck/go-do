@@ -1,5 +1,5 @@
-import { getTask } from "@/lib/task/api/getTask";
-import { TaskPost } from "@/lib/task/types/task";
+import { getTask } from "@/lib/api/taskGet";
+import { Task } from "@/lib/types/task";
 import Link from "next/link";
 
 type Params = {
@@ -12,7 +12,6 @@ type Params = {
 export default async function Page({ params: { Table, Id } }: Params) {
   //const taskData: Promise<Task> = getTask(Table, Id);
   //const task = await taskData;
-//
   //console.log(task);
 
   const content = (
@@ -26,10 +25,10 @@ export default async function Page({ params: { Table, Id } }: Params) {
   return content;
 }
 
-const makeTaskCard = (task: TaskPost): JSX.Element => {
+const makeTaskCard = (task: Task): JSX.Element => {
   return (
     <Link href={`/wall`}>
-      {task.name} : {task.description} : {task.deadline}
+      {task.name} : {task.description}
     </Link>
   );
 };

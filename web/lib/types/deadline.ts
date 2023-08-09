@@ -20,7 +20,7 @@ export function makeDeadline(deadlineString: string): Deadline {
     time: {
       minute: time[0],
       hour: time[1],
-    }, 
+    },
   };
 
   return deadline;

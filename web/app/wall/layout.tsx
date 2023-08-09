@@ -5,8 +5,8 @@ const inter = Inter({ subsets: ['latin'] });
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body 
-        suppressHydrationWarning={true} 
+      <body
+        suppressHydrationWarning={false}
         className={inter.className}
       >
         {children}

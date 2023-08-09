@@ -1,16 +1,15 @@
-import { TaskPost } from "@/lib/task/types/task";
+import { Task } from "@/lib/types/task";
 
-export async function patchTask(table: string, task: TaskPost) {
+export async function patchTask(table: string, task: Task) {
   const response = await fetch(
-    `http://localhost:8080/todo?table=${table}`,
+    `http://localhost:8080/task/${table}`,
     {
       method: "PATCH",
       body: null, // TODO: fix
-    },    
+    },
   );
 
   if (!response.ok) throw new Error("failed to fetch (patch) from api");
 
   return response.json();
 }
-  

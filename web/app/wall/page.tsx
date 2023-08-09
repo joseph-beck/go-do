@@ -1,42 +1,48 @@
 'use client';
 
-import { getAllTasks } from "@/lib/task/api/getTask";
-import { TaskPost } from "@/lib/task/types/task";
+import { useState, useEffect } from 'react';
+import { listTasks } from "@/lib/api/taskGet";
+import { Task } from "@/lib/types/task";
 import Link from "next/link";
 
-export default async function Page() {
-  const taskData: Promise<TaskPost[]> = getAllTasks("tasks");
-  const tasks = await taskData;
+export default function Page() {
+  const [content, setContent] = useState<JSX.Element | null>(null);
 
-  const content = (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <h1>Hello</h1>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const tasksData = await listTasks("tasks");
+        const taskElements = tasksData.map((task: Task) => taskCard(task));
 
-      <button
-        onClick={createForm}
-        className="flex top-0 left-0"
-      >
-        Create
-      </button>
-
-      {tasks.map(task => {
-        return (
-          taskCard(task)
+        const pageContent = (
+          <main className="flex min-h-screen flex-col items-center justify-between p-24">
+            <h1>Hello</h1>
+            <button onClick={createForm} className="flex top-0 left-0">Create</button>
+            {taskElements}
+          </main>
         );
-      })}
-    </main>
-  );
+
+        setContent(pageContent);
+      } catch (error) {
+        console.error('Error fetching tasks:', error)
+
+        setContent(<p>Error fetching tasks</p>);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return content;
 }
 
-const taskCard = (task: TaskPost): JSX.Element => {
+const taskCard = (task: Task): JSX.Element => {
   return (
-    <Link 
+    <Link
       href={`/wall/${task.id}`}
       key={task.id}
     >
-      {task.name} : {task.description} : {task.deadline}
+      {task.name} : {task.description}
     </Link>
   );
 };
@@ -46,7 +52,7 @@ const createForm = (): JSX.Element => {
 
   return (
     <form>
-      
+
     </form>
   );
 };
