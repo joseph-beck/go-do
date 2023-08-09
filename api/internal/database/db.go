@@ -78,7 +78,7 @@ func (s *Store) Ping() error {
 
 func (s *Store) ListTask(t string) ([]models.TaskModel, error) {
 	m := make([]models.TaskModel, 0)
-	r := s.db.Table(t).Find(&m)
+	r := s.db.Table(t).Not("id = ?", 0).Find(&m)
 	return m, r.Error
 }
 
