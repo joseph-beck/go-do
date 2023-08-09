@@ -3,17 +3,19 @@
 [<img src="https://img.shields.io/github/commit-activity/m/joseph-beck/go-do?style=flat-square">]()
 [<img src="https://img.shields.io/github/issues/joseph-beck/go-do?style=flat-square">]()
 
-# GoDo
+# **`GoDo`**
 
-Full stack Todo app written with Go and Typescript.
+Full stack Todo app written with Go and Typescript using a Postgres Database.
 
 # Dependencies
 
-## Go
+## *`Go`*
+
 - Gin
 - Gorm
 
-## Typescript
-- Next
+## *`Typescript`*
+
+- Next JS
 - Tailwind
 - Fetch
