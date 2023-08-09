@@ -7,14 +7,14 @@
 
 Full stack Todo app written with Go and Typescript using a Postgres Database.
 
-# Dependencies
+## *`Dependencies`*
 
-## *`Go`*
+### *`Go`*
 
 - Gin
 - Gorm
 
-## *`Typescript`*
+### *`Typescript`*
 
 - Next JS
 - Tailwind
