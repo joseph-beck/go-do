@@ -99,9 +99,9 @@ func TaskPost(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := c.Param("table")
+		l := c.Param("list")
 		b := models.TaskPost{}
-		c.Bind(&b)
+		c.ShouldBindJSON(&b)
 		m := b.ToTaskModel()
 
 		e := s.CheckTask(l, m.Id)
@@ -182,9 +182,9 @@ func TaskPatch(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := c.Param("table")
+		l := c.Param("list")
 		b := models.TaskPost{}
-		c.Bind(&b)
+		c.ShouldBindJSON(&b)
 		m := b.ToTaskModel()
 
 		e := s.CheckTask(l, m.Id)
@@ -213,7 +213,7 @@ func TaskDelete(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := c.Param("table")
+		l := c.Param("list")
 		i := c.Param("task")
 
 		id, err := strconv.Atoi(i)
