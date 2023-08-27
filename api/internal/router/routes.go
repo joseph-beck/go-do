@@ -15,8 +15,8 @@ type Route struct {
 	Name        string          // Route name
 	Method      Method          // Route method
 	Path        string          // Route path
-	Handler     string          // Route Handler
-	HandlerFunc gin.HandlerFunc // Route Handler Function
+	Params      string          // Route parameters
+	HandlerFunc gin.HandlerFunc // Route handler func
 }
 
 // Routes stores a slice of the Route struct.
