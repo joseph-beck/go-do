@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { listTasks } from "@/lib/api/taskGet";
 import { Task } from "@/lib/types/task";
-import Link from "next/link";
+import { TaskCard } from '@/components/cards/taskCard';
 
 export default function Page() {
   const [content, setContent] = useState<JSX.Element | null>(null);
@@ -38,12 +38,12 @@ export default function Page() {
 
 const taskCard = (task: Task): JSX.Element => {
   return (
-    <Link
-      href={`/wall/${task.id}`}
-      key={task.id}
-    >
-      {task.name} : {task.description}
-    </Link>
+    <div>
+      <TaskCard
+        title={task.name}
+        body={task.description}
+      />
+    </div>
   );
 };
 
