@@ -19,14 +19,21 @@ func TaskList(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := c.Param("list")
-		m, err := s.ListTask(l)
+		t := c.Param("list")
+
+		err := initTaskTable(s, t)
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
 		}
 
-		r := make([]models.TaskPost, len(l))
+		m, err := s.ListTask(t)
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		r := make([]models.TaskPost, len(t))
 		for i, task := range m {
 			r[i] = task.ToTaskPost()
 		}
@@ -49,6 +56,12 @@ func TaskGet(s *database.Store) gin.HandlerFunc {
 		i := c.Param("task")
 
 		id, err := strconv.Atoi(i)
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		err = initTaskTable(s, t)
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -99,18 +112,24 @@ func TaskPost(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := c.Param("list")
+		t := c.Param("list")
 		b := models.TaskPost{}
 		c.ShouldBindJSON(&b)
 		m := b.ToTaskModel()
 
-		e := s.CheckTask(l, m.Id)
+		err := initTaskTable(s, t)
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		e := s.CheckTask(t, m.Id)
 		if e {
 			c.Status(http.StatusBadRequest)
 			return
 		}
 
-		err := s.AddTask(l, m)
+		err = s.AddTask(t, m)
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -236,4 +255,10 @@ func TaskDelete(s *database.Store) gin.HandlerFunc {
 
 		c.Status(http.StatusNoContent)
 	}
+}
+
+// Create task table if it does not exist
+func initTaskTable(s *database.Store, n string) error {
+	err := s.CreateTable(n, &models.TaskModel{})
+	return err
 }
