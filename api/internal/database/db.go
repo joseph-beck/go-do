@@ -12,6 +12,12 @@ import (
 	"gorm.io/gorm"
 )
 
+const (
+	UsersTable = "users"
+)
+
+// Function that returns pointer to a gorm db
+// api can work with various dbs.
 type DbMaker func() *gorm.DB
 
 // Creates a pointer to a gorm db.
@@ -138,6 +144,38 @@ func (s *Store) DeleteTask(t string, i int) error {
 func (s *Store) CheckTask(t string, i int) bool {
 	m := models.TaskModel{Id: i}
 	r := s.db.Table(t).Model(&m).First(&m)
+	return r.Error == nil
+}
+
+// Lists all users from the users table.
+func (s *Store) ListUser() ([]models.User, error) {
+	return nil, nil
+}
+
+// Gets a specific user from the users table.
+func (s *Store) GetUser(i int) (models.User, error) {
+	return models.User{}, nil
+}
+
+// Adds a user to the users table.
+// Password should be hashed before being added.
+func (s *Store) AddUser(m models.User) error {
+	r := s.db.Table(UsersTable).Create(&m)
+	return r.Error
+}
+
+// Update a given user
+func (s *Store) UpdateUser(m models.User) error {
+	return nil
+}
+
+func (s *Store) DeleteUser(i int) error {
+	return nil
+}
+
+func (s *Store) CheckUser(i uint) bool {
+	m := models.User{Model: models.Model{ID: i}}
+	r := s.db.Table(UsersTable).Find(&m)
 	return r.Error == nil
 }
 

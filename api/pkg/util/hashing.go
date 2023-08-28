@@ -1,9 +1,13 @@
 package util
 
-import "crypto/sha256"
+import (
+	"crypto/sha256"
+	"fmt"
+)
 
 func HashString(s string) string {
 	h := sha256.New()
 	h.Write([]byte(s))
-	return string(h.Sum(nil))
+	p := fmt.Sprintf("%x", h.Sum(nil))
+	return p
 }
