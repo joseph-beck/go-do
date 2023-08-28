@@ -16,6 +16,7 @@ import (
 // Stores the router
 var r *router.Router
 
+// Stores the store
 var s *database.Store
 
 // Runs the app
