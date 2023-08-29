@@ -12,14 +12,22 @@ export default function Page() {
     const fetchData = async () => {
       try {
         const tasksData = await listTasks("tasks");
-        const taskElements = tasksData.map((task: Task) => taskCard(task));
+        const taskElements = tasksData.map((task: Task, index: number) => taskCard(task, index));
 
         const pageContent = (
-          <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <h1>Hello</h1>
-            <button onClick={createForm} className="flex top-0 left-0">Create</button>
-            {taskElements}
-          </main>
+          <div className="flex min-h-screen flex-col">
+            <header className="bg-blue-200 p-4">Header</header>
+            <div className="flex flex-1 flex-row">
+              <main className="flex-1 bg-blue-50 p-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {taskElements}
+                </div>
+              </main>
+              <nav className="order-first w-32 bg-blue-100 p-4">Navigation</nav>
+              <aside className="w-32 bg-blue-100 p-4">Side</aside>
+            </div>
+            <footer className="bg-blue-200 p-4">Footer</footer>
+          </div>
         );
 
         setContent(pageContent);
@@ -36,14 +44,14 @@ export default function Page() {
   return content;
 }
 
-const taskCard = (task: Task): JSX.Element => {
+const taskCard = (task: Task, index: number): JSX.Element => {
   return (
-    <div>
-      <TaskCard
-        title={task.name}
-        body={task.description}
-      />
-    </div>
+    <TaskCard
+      index={index}
+      title={task.name}
+      body={task.description}
+      complete={task.complete}
+    />
   );
 };
 
