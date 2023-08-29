@@ -1,13 +1,14 @@
 package file
 
 import (
+	"bufio"
 	"errors"
-	"go-do/pkg/util"
 	"os"
 )
 
-func CreateFile(dir string) error {
-	f, err := os.Create(dir)
+// Create a file with the given path.
+func CreateFile(path string) error {
+	f, err := os.Create(path)
 	if err != nil {
 		return err
 	}
@@ -20,19 +21,20 @@ func CreateFile(dir string) error {
 	return nil
 }
 
-func WriteFile(w string, dir string) error {
-	e, err := CheckFile(dir)
+// Write to a file, if it does not exist create it.
+func WriteFile(w string, path string) error {
+	e, err := CheckFile(path)
 	if err != nil {
 		return err
 	}
 	if !e {
-		err = CreateFile(dir)
+		err = CreateFile(path)
 		if err != nil {
 			return err
 		}
 	}
 
-	f, err := os.OpenFile(dir, os.O_WRONLY|os.O_APPEND, 0644)
+	f, err := os.OpenFile(path, os.O_WRONLY|os.O_APPEND, 0644)
 	if err != nil {
 		return err
 	}
@@ -46,8 +48,9 @@ func WriteFile(w string, dir string) error {
 	return nil
 }
 
-func DeleteFile(dir string) error {
-	err := os.Remove(dir)
+// Delete a file with the given path.
+func DeleteFile(path string) error {
+	err := os.Remove(path)
 	if err != nil {
 		return err
 	}
@@ -55,22 +58,33 @@ func DeleteFile(dir string) error {
 	return nil
 }
 
-func ReadFile(dir string) ([]string, error) {
-	e, err := CheckFile(dir)
-
+// Read the contents of a given file into a []string.
+func ReadFile(path string) ([]string, error) {
+	e, err := CheckFile(path)
 	if err != nil {
 		return nil, err
 	}
-
 	if !e {
-		return nil, util.ErrFileNotExist
+		return nil, os.ErrNotExist
 	}
 
-	return nil, nil
+	f, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer f.Close()
+
+	var l []string
+	scanner := bufio.NewScanner(f)
+	for scanner.Scan() {
+		l = append(l, scanner.Text())
+	}
+	return l, scanner.Err()
 }
 
-func CheckFile(dir string) (bool, error) {
-	_, err := os.Stat(dir)
+// Check if a file exists at the given path.
+func CheckFile(path string) (bool, error) {
+	_, err := os.Stat(path)
 	if err != nil {
 		if errors.Is(err, os.ErrNotExist) {
 			return false, nil
@@ -82,6 +96,18 @@ func CheckFile(dir string) (bool, error) {
 	return true, nil
 }
 
-func FileContains(c string, dir string) (bool, error) {
+// Check if the given file contains the given string.
+func FileContains(c string, path string) (bool, error) {
+	lines, err := ReadFile(path)
+	if err != nil {
+		return false, err
+	}
+
+	for _, l := range lines {
+		if l == c {
+			return true, nil
+		}
+	}
+
 	return false, nil
 }

@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func HashString(s string) string {
+func Sha256Hash(s string) string {
 	h := sha256.New()
 	h.Write([]byte(s))
 	p := fmt.Sprintf("%x", h.Sum(nil))

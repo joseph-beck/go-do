@@ -40,7 +40,7 @@ func UserPost(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		m := models.User{}
 		c.ShouldBindJSON(&m)
-		m.Password = util.HashString(m.Password)
+		m.Password = util.Sha256Hash(m.Password)
 
 		e := s.CheckUser(m.ID)
 		if e {
