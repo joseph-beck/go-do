@@ -149,12 +149,16 @@ func (s *Store) CheckTask(t string, i int) bool {
 
 // Lists all users from the users table.
 func (s *Store) ListUser() ([]models.User, error) {
-	return nil, nil
+	m := make([]models.User, 0)
+	r := s.db.Table(UsersTable).Not("id = ?", 0).Find(&m)
+	return m, r.Error
 }
 
 // Gets a specific user from the users table.
-func (s *Store) GetUser(i int) (models.User, error) {
-	return models.User{}, nil
+func (s *Store) GetUser(i uint) (models.User, error) {
+	m := models.User{Model: models.Model{ID: i}}
+	r := s.db.Table(UsersTable).Find(&m).First(&m)
+	return m, r.Error
 }
 
 // Adds a user to the users table.
@@ -166,13 +170,18 @@ func (s *Store) AddUser(m models.User) error {
 
 // Update a given user
 func (s *Store) UpdateUser(m models.User) error {
-	return nil
+	r := s.db.Table(UsersTable).Save(&m)
+	return r.Error
 }
 
-func (s *Store) DeleteUser(i int) error {
-	return nil
+// Deletes the given user from the users table.
+func (s *Store) DeleteUser(i uint) error {
+	m := models.User{Model: models.Model{ID: i}}
+	r := s.db.Table(UsersTable).Delete(&m)
+	return r.Error
 }
 
+// Checks if the given user exists in the users table.
 func (s *Store) CheckUser(i uint) bool {
 	m := models.User{Model: models.Model{ID: i}}
 	r := s.db.Table(UsersTable).Find(&m)

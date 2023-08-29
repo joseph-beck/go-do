@@ -5,16 +5,19 @@ import (
 	"go-do/internal/models"
 	"go-do/pkg/util"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
 
+// /user/login...
 func UserLogon(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
 	}
 }
 
+// /user/signup...
 func UserSignup(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -24,14 +27,33 @@ func UserSignup(s *database.Store) gin.HandlerFunc {
 // /user
 func UserList(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		r, err := s.ListUser()
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
 
+		c.JSON(http.StatusOK, r)
 	}
 }
 
 // /user/:id
 func UserGet(s *database.Store) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		i := c.Param("id")
+		id, err := strconv.Atoi(i)
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
 
+		r, err := s.GetUser(uint(id))
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		c.JSON(http.StatusOK, r)
 	}
 }
 
