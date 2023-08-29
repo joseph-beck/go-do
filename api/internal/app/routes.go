@@ -67,6 +67,48 @@ func makeRoutes() router.Routes {
 				HandlerFunc: handlers.TaskDelete(s),
 			},
 			// User Handlers
+			{
+				Name:        "List User",
+				Method:      router.Get,
+				Path:        "/user",
+				Params:      "",
+				HandlerFunc: handlers.UserList(s),
+			},
+			{
+				Name:        "Get User",
+				Method:      router.Get,
+				Path:        "/user",
+				Params:      "/:id",
+				HandlerFunc: handlers.UserGet(s),
+			},
+			{
+				Name:        "Post User",
+				Method:      router.Post,
+				Path:        "/user",
+				Params:      "/:id",
+				HandlerFunc: handlers.UserPost(s),
+			},
+			{
+				Name:        "Put User",
+				Method:      router.Put,
+				Path:        "/user",
+				Params:      "/:list",
+				HandlerFunc: handlers.UserPut(s),
+			},
+			{
+				Name:        "Patch User",
+				Method:      router.Patch,
+				Path:        "/user",
+				Params:      "",
+				HandlerFunc: handlers.UserPatch(s),
+			},
+			{
+				Name:        "Delete User",
+				Method:      router.Delete,
+				Path:        "/user",
+				Params:      "/:id",
+				HandlerFunc: handlers.UserDelete(s),
+			},
 		},
 	}
 }

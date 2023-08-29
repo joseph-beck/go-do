@@ -108,41 +108,41 @@ func (s *Store) Ping() error {
 
 // Lists all tasks from a given table./
 // It should not return any with id of 0.
-func (s *Store) ListTask(t string) ([]models.TaskModel, error) {
-	m := make([]models.TaskModel, 0)
+func (s *Store) ListTask(t string) ([]models.Task, error) {
+	m := make([]models.Task, 0)
 	r := s.db.Table(t).Not("id = ?", 0).Find(&m)
 	return m, r.Error
 }
 
 // Gets a task from a table of given id.
-func (s *Store) GetTask(t string, i int) (models.TaskModel, error) {
-	m := models.TaskModel{Id: i}
+func (s *Store) GetTask(t string, i uint) (models.Task, error) {
+	m := models.Task{Model: models.Model{ID: i}}
 	r := s.db.Table(t).Find(&m).First(&m)
 	return m, r.Error
 }
 
 // Adds a given task to the given table.
-func (s *Store) AddTask(t string, m models.TaskModel) error {
+func (s *Store) AddTask(t string, m models.Task) error {
 	r := s.db.Table(t).Create(&m)
 	return r.Error
 }
 
 // Updates the given task in the given table.
-func (s *Store) UpdateTask(t string, m models.TaskModel) error {
+func (s *Store) UpdateTask(t string, m models.Task) error {
 	r := s.db.Table(t).Save(&m)
 	return r.Error
 }
 
 // Deletes a given task id from a given table.
-func (s *Store) DeleteTask(t string, i int) error {
-	m := models.TaskModel{Id: i}
+func (s *Store) DeleteTask(t string, i uint) error {
+	m := models.Task{Model: models.Model{ID: i}}
 	r := s.db.Table(t).Delete(&m)
 	return r.Error
 }
 
 // Checks that the task id given exists in the given table.
-func (s *Store) CheckTask(t string, i int) bool {
-	m := models.TaskModel{Id: i}
+func (s *Store) CheckTask(t string, i uint) bool {
+	m := models.Task{Model: models.Model{ID: i}}
 	r := s.db.Table(t).Model(&m).First(&m)
 	return r.Error == nil
 }
