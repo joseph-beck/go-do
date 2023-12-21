@@ -31,6 +31,14 @@ func Run() {
 	r = router.New()
 	r.Register(routes)
 	r.NoRoute(reverseProxy())
-	go r.Shutdown()
+	go shutdown()
 	r.Run()
+}
+
+func shutdown() {
+	r.Shutdown()
+	err := s.Close()
+	if err != nil {
+		panic(err)
+	}
 }

@@ -4,9 +4,8 @@ import (
 	"go-do/internal/database"
 	"go-do/internal/models"
 	"net/http"
-	"strconv"
 
-	"github.com/gin-gonic/gin"
+	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
 // TaskList is the HandlerFunc for getting all Tasks from a Table.
@@ -15,13 +14,17 @@ import (
 //
 // Example usage:
 //   - /task/:list : returns the results of the given List.
-func TaskList(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func TaskList(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
-		t := c.Param("list")
+		t, err := c.Param("list")
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
 
-		err := initTaskTable(s, t)
+		err = initTaskTable(s, t)
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -43,14 +46,17 @@ func TaskList(s *database.Store) gin.HandlerFunc {
 //
 // Example usage:
 //   - /task/:list/:task : returns a specific Task from a given List.
-func TaskGet(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func TaskGet(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
-		t := c.Param("list")
-		i := c.Param("task")
+		t, err := c.Param("list")
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
 
-		id, err := strconv.Atoi(i)
+		i, err := c.ParamInt("task")
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -62,13 +68,13 @@ func TaskGet(s *database.Store) gin.HandlerFunc {
 			return
 		}
 
-		e := s.CheckTask(t, uint(id))
+		e := s.CheckTask(t, uint(i))
 		if !e {
 			c.Status(http.StatusNoContent)
 			return
 		}
 
-		r, err := s.GetTask(t, uint(id))
+		r, err := s.GetTask(t, uint(i))
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -102,15 +108,24 @@ func TaskGet(s *database.Store) gin.HandlerFunc {
 //     }
 //
 //     an id can also be given if the sender wishes to specify this.
-func TaskPost(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func TaskPost(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
-		t := c.Param("list")
-		m := models.Task{}
-		c.ShouldBindJSON(&m)
+		t, err := c.Param("list")
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
 
-		err := initTaskTable(s, t)
+		var m models.Task
+		err = c.ShouldBindJSON(&m)
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		err = initTaskTable(s, t)
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -160,13 +175,22 @@ func TaskPost(s *database.Store) gin.HandlerFunc {
 //     }
 //
 //     an id must be given here otherwise a StatusBadRequest will be given.
-func TaskPut(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func TaskPut(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := c.Param("list")
-		m := models.Task{}
-		c.ShouldBindJSON(&m)
+		l, err := c.Param("list")
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		var m models.Task
+		err = c.ShouldBindJSON(&m)
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
 
 		e := s.CheckTask(l, m.ID)
 		if !e || m.ID == 0 {
@@ -213,13 +237,22 @@ func TaskPut(s *database.Store) gin.HandlerFunc {
 //     }
 //
 //     an id must be given here otherwise a StatusBadRequest will be given.
-func TaskPatch(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func TaskPatch(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := c.Param("list")
-		m := models.Task{}
-		c.ShouldBindJSON(&m)
+		l, err := c.Param("list")
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		var m models.Task
+		err = c.ShouldBindJSON(&m)
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
 
 		e := s.CheckTask(l, m.ID)
 		if !e {
@@ -227,7 +260,7 @@ func TaskPatch(s *database.Store) gin.HandlerFunc {
 			return
 		}
 
-		err := s.UpdateTask(l, m)
+		err = s.UpdateTask(l, m)
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -243,26 +276,29 @@ func TaskPatch(s *database.Store) gin.HandlerFunc {
 //
 // Example usage:
 //   - /task?table='table'&id='id' : deletes the Task Model at the given table and id.
-func TaskDelete(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func TaskDelete(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
-		l := c.Param("list")
-		i := c.Param("task")
-
-		id, err := strconv.Atoi(i)
+		l, err := c.Param("list")
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
 		}
 
-		e := s.CheckTask(l, uint(id))
+		i, err := c.ParamInt("task")
+		if err != nil {
+			c.Status(http.StatusBadRequest)
+			return
+		}
+
+		e := s.CheckTask(l, uint(i))
 		if !e {
 			c.Status(http.StatusNoContent)
 			return
 		}
 
-		err = s.DeleteTask(l, uint(id))
+		err = s.DeleteTask(l, uint(i))
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -274,6 +310,7 @@ func TaskDelete(s *database.Store) gin.HandlerFunc {
 
 // Create task table if it does not exist
 func initTaskTable(s *database.Store, n string) error {
-	err := s.CreateTable(n, &models.Task{})
+	var m models.Task
+	err := s.CreateTable(n, &m)
 	return err
 }
