@@ -3,7 +3,7 @@ package models
 import "time"
 
 // Gorm model for the Task:
-//   - `Id` : id of task, primary key & auto increment.
+//   - `Model` : regular Model.
 //   - `Name` : name of the task, defaults to "Task Name", varchar(50) & not null.
 //   - `Description` : description of task, defaults to "Task Description", text & not null.
 //   - `Complete` : is task complete? defaults to false, boolean & not null.

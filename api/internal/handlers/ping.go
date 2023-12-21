@@ -4,7 +4,7 @@ import (
 	"go-do/internal/database"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
 // Creates a gin HandlerFunc.
@@ -16,15 +16,15 @@ import (
 //
 // Example usage:
 //   - /ping : returns as stated above.
-func PingGet(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func PingGet(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		err := s.Ping()
 		r := "pong"
 		if err != nil {
 			r = "boom"
 		}
 
-		c.JSON(http.StatusOK, gin.H{
+		c.JSON(http.StatusOK, routey.M{
 			"ping": r,
 		})
 	}

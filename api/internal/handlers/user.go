@@ -5,28 +5,27 @@ import (
 	"go-do/internal/models"
 	"go-do/pkg/util"
 	"net/http"
-	"strconv"
 
-	"github.com/gin-gonic/gin"
+	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
 // /user/login...
-func UserLogon(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func UserLogon(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 
 	}
 }
 
 // /user/signup...
-func UserSignup(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func UserSignup(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 
 	}
 }
 
 // /user
-func UserList(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func UserList(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
 		r, err := s.ListUser()
@@ -40,18 +39,17 @@ func UserList(s *database.Store) gin.HandlerFunc {
 }
 
 // /user/:id
-func UserGet(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func UserGet(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
-		i := c.Param("id")
-		id, err := strconv.Atoi(i)
+		i, err := c.ParamInt("id")
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
 		}
 
-		r, err := s.GetUser(uint(id))
+		r, err := s.GetUser(uint(i))
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
@@ -62,8 +60,8 @@ func UserGet(s *database.Store) gin.HandlerFunc {
 }
 
 // /user
-func UserPost(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func UserPost(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
 		m := models.User{}
@@ -89,8 +87,8 @@ func UserPost(s *database.Store) gin.HandlerFunc {
 }
 
 // /user
-func UserPut(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func UserPut(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
 		m := models.User{}
@@ -117,8 +115,8 @@ func UserPut(s *database.Store) gin.HandlerFunc {
 }
 
 // /user
-func UserPatch(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func UserPatch(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
 		m := models.User{}
@@ -142,24 +140,23 @@ func UserPatch(s *database.Store) gin.HandlerFunc {
 }
 
 // user/:id
-func UserDelete(s *database.Store) gin.HandlerFunc {
-	return func(c *gin.Context) {
+func UserDelete(s *database.Store) routey.HandlerFunc {
+	return func(c *routey.Context) {
 		c.Header("Content-Type", "application/json")
 
-		i := c.Param("id")
-		id, err := strconv.Atoi(i)
+		i, err := c.ParamInt("id")
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return
 		}
 
-		e := s.CheckUser(uint(id))
+		e := s.CheckUser(uint(i))
 		if !e {
 			c.Status(http.StatusNoContent)
 			return
 		}
 
-		err = s.DeleteUser(uint(id))
+		err = s.DeleteUser(uint(i))
 		if err != nil {
 			c.Status(http.StatusBadRequest)
 			return

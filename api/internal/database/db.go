@@ -77,8 +77,8 @@ type Store struct {
 }
 
 // Creates a new store with the given db maker.
-func New(m DbMaker) *Store {
-	return &Store{
+func New(m DbMaker) Store {
+	return Store{
 		db: m(),
 	}
 }

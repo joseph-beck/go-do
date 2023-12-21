@@ -1,27 +1,21 @@
 DOCKER ?= docker
-DOCKERCOMPOSE ?= docker-compose 
+DOCKERCOMPOSE ?= docker-compose
 
 GO ?= go
 GOFMT ?= gofmt "-s"
 GOFILES := $(shell find . -name "*.go")
 GOMODULES := $(shell go list ./...)
 
-# clean & build
+# run & build & clean
+
+run:
+	$(GO) run cmd/httpd/main.go
 
 clean:
 	@rm -r build
 
-build: 
-	$(GO) build -o build/program/app cmd/httpd/main.go 
-
-# run & dev
-
-run:
-	make build
-	./build/program/app
-
-dev: 
-	$(GO) run cmd/httpd/main.go
+build:
+	$(GO) build -o build/program/app cmd/httpd/main.go
 
 # fmt
 
@@ -31,9 +25,18 @@ fmt:
 # testing
 
 test:
-	$(GO) clean -testcache 
+	$(GO) clean -testcache
 	$(GO) mod tidy
 	$(GO) test -cover $(GOMODULES)
+
+update:
+	$(GO) get -u ./...
+	$(GO) mod tidy
+
+info:
+	@$(GO) vet $(GOMODULES)
+	@$(GO) list $(GOMODULES)
+	@$(GO) version
 
 # deployment
 
@@ -50,4 +53,4 @@ compose:
 
 # phony
 
-.PHONY: clean build run dev fmt test deploy tdeploy compose
+.PHONY: clean build run fmt test update info deploy tdeploy compose
