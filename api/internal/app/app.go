@@ -30,6 +30,7 @@ func Run() {
 
 	r = router.New()
 	r.Register(routes)
+	r.Services(service)
 	r.NoRoute(reverseProxy())
 	go shutdown()
 	r.Run()
