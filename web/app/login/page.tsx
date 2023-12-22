@@ -11,14 +11,14 @@ export default async function Page() {
           <div className="max-w-screen-xl mx-auto px-4 flex items-center justify-center h-full md:px-8">
             <div className="max-w-lg mx-auto space-y-3 text-center">
               <h3 className="text-gray-200 text-4xl font-semibold sm:text-5xl">
-                Page under construction
+                page under construction
               </h3>
               <Divider width="1/4" />
               <p className="text-gray-400">
-                Sorry, the page you are looking for is currently under construction.
+                sorry, the page you are looking for is currently under construction.
               </p>
               <a href="/" className="text-indigo-600 duration-200 bg-black rounded-lg leading-none hover:text-indigo-400 font-medium inline-flex items-center gap-x-1">
-                Go home &rarr;
+                go home &rarr;
               </a>
             </div>
           </div>

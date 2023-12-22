@@ -1,19 +1,16 @@
 import { Blink, SpecialBlink } from "../input/blink";
 import { Divider } from "../layout/divider";
 
-type Navigation = {
+type Navs = {
   title: string;
   path: string;
 };
 
 export const NavigationBar = (): JSX.Element => {
-  const navigation: Navigation[] = [
+  const navigation: Navs[] = [
+    { title: "home", path: "/" },
     { title: "features", path: "/features" },
     { title: "help", path: "/help" },
-  ]
-
-  const special: Navigation[] = [
-    { title: "login", path: "/login" }
   ]
 
   const content = (
@@ -30,15 +27,9 @@ export const NavigationBar = (): JSX.Element => {
                 );
               })
             }
-            {
-              special.map((item, idx) => {
-                return (
-                  <div key={idx} className="pl-32">
-                    <SpecialBlink text={item.title} href={item.path} />
-                  </div>
-                );
-              })
-            }
+            <div className="pl-32">
+              <SpecialBlink text="login &rarr;" href="/login" />
+            </div>
           </ul>
         </div>
       </div>
