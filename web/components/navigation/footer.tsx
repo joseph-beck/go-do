@@ -23,9 +23,6 @@ export const Footer: React.FC<Props> = (): JSX.Element => {
     <footer className="bg-black pt-10">
       <div className="max-w-screen-xl mx-auto px-4 text-gray-600 md:px-8">
         <div className="space-y-6 sm:max-w-md sm:mx-auto sm:text-center">
-          <h3 className="text-gray-200 text-4xl font-semibold sm:text-5xl">
-            godo
-          </h3>
           <p>
             explore what godo has to offer
           </p>
