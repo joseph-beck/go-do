@@ -3,8 +3,8 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'signup - godo',
-  description: 'login page for the godo app',
+  title: '303 under construction',
+  description: 'help page for the godo app',
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {

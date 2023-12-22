@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: '303 under construction',
+  title: 'login - godo',
   description: 'login page for the godo app',
 };
 
