@@ -1,6 +1,7 @@
 import React from "react"
 import { Blink, SpecialBlink } from "../input/blink";
 import { Divider } from "../layout/divider";
+import Link from "next/link";
 
 export type Props = {
 
@@ -40,9 +41,9 @@ export const Footer: React.FC<Props> = (): JSX.Element => {
             {
               footerNavs.map((item, idx) => (
                 <li key={idx} className="text-gray-800 hover:text-gray-500 duration-150">
-                  <a href={item.href}>
+                  <Link href={item.href}>
                     {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))
             }
