@@ -10,6 +10,8 @@ var (
 	ErrQueryResp            = errors.New("error, getting query response")
 	ErrUndefinedRouteMethod = errors.New("error, this route method is undefined")
 	ErrFileNotExist         = errors.New("error, tried writting to a file that does not exist")
+	ErrTableDoesNotExist    = errors.New("error, this table does not exist")
+	ErrTableAlreadyExists   = errors.New("error, this table already exists")
 )
 
 // Panics out of the program

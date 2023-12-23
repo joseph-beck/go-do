@@ -26,7 +26,7 @@ func TestCreateFile(t *testing.T) {
 func TestWriteFile(t *testing.T) {
 	file := "test.txt"
 
-	err := WriteFile("hello file", file)
+	err := WriteFile(file, "hello file")
 	assert.NoError(t, err)
 
 	e, err := CheckFile(file)
@@ -52,10 +52,33 @@ func TestDeleteFile(t *testing.T) {
 	e, err := CheckFile(file)
 	assert.NoError(t, err)
 	assert.False(t, e)
+
+	err = DeleteFile("test_file.txt")
+	assert.Error(t, err)
 }
 
 func TestReadFile(t *testing.T) {
+	file := "test.txt"
 
+	err := CreateFile(file)
+	assert.NoError(t, err)
+
+	err = WriteFile(file, "hello file")
+	assert.NoError(t, err)
+
+	c, err := ReadFile(file)
+	assert.NoError(t, err)
+	assert.Equal(t, "hello file", c[0])
+
+	err = DeleteFile(file)
+	assert.NoError(t, err)
+
+	e, err := CheckFile(file)
+	assert.NoError(t, err)
+	assert.False(t, e)
+
+	_, err = ReadFile("test_file.txt")
+	assert.Error(t, err)
 }
 
 func TestCheckFile(t *testing.T) {
@@ -79,4 +102,32 @@ func TestCheckFile(t *testing.T) {
 	e, err = CheckFile(b)
 	assert.NoError(t, err)
 	assert.False(t, e)
+}
+
+func TestFileContains(t *testing.T) {
+	file := "test.txt"
+
+	err := CreateFile(file)
+	assert.NoError(t, err)
+
+	err = WriteFile(file, "hello file")
+	assert.NoError(t, err)
+
+	c, err := FileContains(file, "hello file")
+	assert.NoError(t, err)
+	assert.True(t, c)
+
+	c, err = FileContains(file, "world")
+	assert.NoError(t, err)
+	assert.False(t, c)
+
+	err = DeleteFile(file)
+	assert.NoError(t, err)
+
+	e, err := CheckFile(file)
+	assert.NoError(t, err)
+	assert.False(t, e)
+
+	_, err = FileContains("test_file.txt", "text")
+	assert.Error(t, err)
 }

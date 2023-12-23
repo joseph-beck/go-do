@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"errors"
 	"os"
+	"strings"
 )
 
 // Create a file with the given path.
@@ -22,7 +23,7 @@ func CreateFile(path string) error {
 }
 
 // Write to a file, if it does not exist create it.
-func WriteFile(w string, path string) error {
+func WriteFile(path string, w string) error {
 	e, err := CheckFile(path)
 	if err != nil {
 		return err
@@ -97,14 +98,14 @@ func CheckFile(path string) (bool, error) {
 }
 
 // Check if the given file contains the given string.
-func FileContains(c string, path string) (bool, error) {
+func FileContains(path string, c string) (bool, error) {
 	lines, err := ReadFile(path)
 	if err != nil {
 		return false, err
 	}
 
 	for _, l := range lines {
-		if l == c {
+		if strings.Contains(l, c) {
 			return true, nil
 		}
 	}

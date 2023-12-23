@@ -2,8 +2,8 @@ package database
 
 import (
 	"context"
-	"errors"
 	"go-do/internal/models"
+	"go-do/pkg/util"
 
 	"gorm.io/gorm"
 )
@@ -46,6 +46,10 @@ func (s *Store) Ping() error {
 // Lists all tasks from a given table./
 // It should not return any with id of 0.
 func (s *Store) ListTask(t string) ([]models.Task, error) {
+	if !s.CheckTable(t) {
+		return nil, util.ErrTableDoesNotExist
+	}
+
 	m := make([]models.Task, 0)
 	r := s.db.Table(t).Not("id = ?", 0).Find(&m)
 	return m, r.Error
@@ -60,18 +64,30 @@ func (s *Store) GetTask(t string, i uint) (models.Task, error) {
 
 // Adds a given task to the given table.
 func (s *Store) AddTask(t string, m models.Task) error {
+	if !s.CheckTable(t) {
+		return util.ErrTableDoesNotExist
+	}
+
 	r := s.db.Table(t).Create(&m)
 	return r.Error
 }
 
 // Updates the given task in the given table.
 func (s *Store) UpdateTask(t string, m models.Task) error {
+	if !s.CheckTable(t) {
+		return util.ErrTableDoesNotExist
+	}
+
 	r := s.db.Table(t).Save(&m)
 	return r.Error
 }
 
 // Deletes a given task id from a given table.
 func (s *Store) DeleteTask(t string, i uint) error {
+	if !s.CheckTable(t) {
+		return util.ErrTableDoesNotExist
+	}
+
 	m := models.Task{Model: models.Model{ID: i}}
 	r := s.db.Table(t).Delete(&m)
 	return r.Error
@@ -128,7 +144,7 @@ func (s *Store) CheckUser(i uint) bool {
 // Creates a new table if one does not exist with that name of the given model.
 func (s *Store) CreateTable(t string, m interface{}) error {
 	if s.CheckTable(t) {
-		return errors.New("error, table already exists")
+		return util.ErrTableAlreadyExists
 	}
 
 	err := s.db.Table(t).AutoMigrate(m)
@@ -138,7 +154,7 @@ func (s *Store) CreateTable(t string, m interface{}) error {
 // Deletes a given table name
 func (s *Store) DeleteTable(t string) error {
 	if !s.CheckTable(t) {
-		return errors.New("error, table does not exist")
+		return util.ErrTableDoesNotExist
 	}
 
 	err := s.db.Migrator().DropTable(t)
