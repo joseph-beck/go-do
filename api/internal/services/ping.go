@@ -23,13 +23,6 @@ func (s *PingService) Add() []routey.Route {
 			Path:          "/api/v1/ping",
 			Params:        "",
 			Method:        routey.Get,
-			HandlerFunc:   s.List(),
-			DecoratorFunc: nil,
-		},
-		{
-			Path:          "/api/v1/ping",
-			Params:        "",
-			Method:        routey.Get,
 			HandlerFunc:   s.Get(),
 			DecoratorFunc: nil,
 		},
@@ -78,15 +71,9 @@ func (s *PingService) Add() []routey.Route {
 	}
 }
 
-func (s *PingService) List() routey.HandlerFunc {
-	return func(c *routey.Context) {
-
-	}
-}
-
 func (s *PingService) Get() routey.HandlerFunc {
 	return func(c *routey.Context) {
-
+		c.Status(http.StatusOK)
 	}
 }
 

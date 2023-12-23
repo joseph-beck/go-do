@@ -21,13 +21,6 @@ func (s *HealthService) Add() []routey.Route {
 	return []routey.Route{
 		{
 			Path:          "/api/v1",
-			Params:        "",
-			Method:        routey.Get,
-			HandlerFunc:   s.List(),
-			DecoratorFunc: nil,
-		},
-		{
-			Path:          "/api/v1",
 			Params:        "/:id",
 			Method:        routey.Get,
 			HandlerFunc:   s.Get(),
@@ -78,15 +71,9 @@ func (s *HealthService) Add() []routey.Route {
 	}
 }
 
-func (s *HealthService) List() routey.HandlerFunc {
-	return func(c *routey.Context) {
-
-	}
-}
-
 func (s *HealthService) Get() routey.HandlerFunc {
 	return func(c *routey.Context) {
-
+		c.Status(http.StatusOK)
 	}
 }
 

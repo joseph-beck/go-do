@@ -3,10 +3,12 @@ package app
 import (
 	"go-do/internal/database"
 	"go-do/internal/router"
+	"go-do/internal/services"
 	"go-do/pkg/util"
 	"log"
 
 	"github.com/joho/godotenv"
+	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
 // Stores the router
@@ -14,6 +16,22 @@ var r router.Router
 
 // Stores the store
 var s database.Store
+
+// Store the instances of the Services
+var (
+	healthService = services.NewHealthService(&s)
+	pingService   = services.NewPingService(&s)
+	taskService   = services.NewTaskService(&s)
+	userService   = services.NewUserService(&s)
+)
+
+// Store the Service instances in this array
+var service = []routey.Service{
+	&healthService,
+	&pingService,
+	&taskService,
+	&userService,
+}
 
 // Runs the app
 //   - Creates the router.
@@ -36,6 +54,7 @@ func Run() {
 	r.Run()
 }
 
+// Exit the whole program
 func shutdown() {
 	r.Shutdown()
 	err := s.Close()

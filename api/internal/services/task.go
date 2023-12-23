@@ -80,37 +80,37 @@ func (s *TaskService) Add() []routey.Route {
 
 func (s *TaskService) List() routey.HandlerFunc {
 	return func(c *routey.Context) {
-
+		c.Status(http.StatusOK)
 	}
 }
 
 func (s *TaskService) Get() routey.HandlerFunc {
 	return func(c *routey.Context) {
-
+		c.Status(http.StatusOK)
 	}
 }
 
 func (s *TaskService) Post() routey.HandlerFunc {
 	return func(c *routey.Context) {
-
+		c.Status(http.StatusOK)
 	}
 }
 
 func (s *TaskService) Put() routey.HandlerFunc {
 	return func(c *routey.Context) {
-
+		c.Status(http.StatusOK)
 	}
 }
 
 func (s *TaskService) Patch() routey.HandlerFunc {
 	return func(c *routey.Context) {
-
+		c.Status(http.StatusOK)
 	}
 }
 
 func (s *TaskService) Delete() routey.HandlerFunc {
 	return func(c *routey.Context) {
-
+		c.Status(http.StatusOK)
 	}
 }
 

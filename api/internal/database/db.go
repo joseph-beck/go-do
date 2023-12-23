@@ -71,6 +71,12 @@ func SQLiteDb() DbMaker {
 	}
 }
 
+func MockDb() DbMaker {
+	return func() *gorm.DB {
+		return &gorm.DB{}
+	}
+}
+
 // Store data, uses gorm db.
 type Store struct {
 	db *gorm.DB
