@@ -1,16 +1,20 @@
 package services
 
 import (
+	"go-do/internal/database"
 	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
 type PingService struct {
+	db *database.Store
 }
 
-func NewPingService() PingService {
-	return PingService{}
+func NewPingService(db *database.Store) PingService {
+	return PingService{
+		db: db,
+	}
 }
 
 func (s *PingService) Add() []routey.Route {

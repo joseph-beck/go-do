@@ -3,10 +3,10 @@ package app
 import "go-do/internal/services"
 
 var (
-	healthService = services.NewHealthService()
-	pingService   = services.NewPingService()
-	taskService   = services.NewTaskService()
-	userService   = services.NewUserService()
+	healthService = services.NewHealthService(&s)
+	pingService   = services.NewPingService(&s)
+	taskService   = services.NewTaskService(&s)
+	userService   = services.NewUserService(&s)
 )
 
 var service = []services.Service{

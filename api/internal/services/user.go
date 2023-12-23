@@ -1,20 +1,40 @@
 package services
 
 import (
+	"go-do/internal/database"
 	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
 type UserService struct {
+	db *database.Store
 }
 
-func NewUserService() UserService {
-	return UserService{}
+func NewUserService(db *database.Store) UserService {
+	return UserService{
+		db: db,
+	}
 }
 
 func (s *UserService) Add() []routey.Route {
 	return []routey.Route{
+		// sign in and sign up
+		{
+			Path:          "/api/v1/users/signin",
+			Params:        "",
+			Method:        routey.Get,
+			HandlerFunc:   s.SignIn(),
+			DecoratorFunc: nil,
+		},
+		{
+			Path:          "/api/v1/users/signup",
+			Params:        "",
+			Method:        routey.Post,
+			HandlerFunc:   s.SignUp(),
+			DecoratorFunc: nil,
+		},
+		// generic end points
 		{
 			Path:          "/api/v1/users",
 			Params:        "",
@@ -71,6 +91,18 @@ func (s *UserService) Add() []routey.Route {
 			HandlerFunc:   s.Options(),
 			DecoratorFunc: nil,
 		},
+	}
+}
+
+func (s *UserService) SignIn() routey.HandlerFunc {
+	return func(c *routey.Context) {
+		c.Render(http.StatusOK, "sign in")
+	}
+}
+
+func (s *UserService) SignUp() routey.HandlerFunc {
+	return func(c *routey.Context) {
+		c.Render(http.StatusOK, "sign up")
 	}
 }
 

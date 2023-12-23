@@ -1,16 +1,20 @@
 package services
 
 import (
+	"go-do/internal/database"
 	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
 type HealthService struct {
+	db *database.Store
 }
 
-func NewHealthService() HealthService {
-	return HealthService{}
+func NewHealthService(db *database.Store) HealthService {
+	return HealthService{
+		db: db,
+	}
 }
 
 func (s *HealthService) Add() []routey.Route {

@@ -1,16 +1,20 @@
 package services
 
 import (
+	"go-do/internal/database"
 	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
 type TaskService struct {
+	db *database.Store
 }
 
-func NewTaskService() TaskService {
-	return TaskService{}
+func NewTaskService(db *database.Store) TaskService {
+	return TaskService{
+		db: db,
+	}
 }
 
 func (s *TaskService) Add() []routey.Route {
