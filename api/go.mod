@@ -27,7 +27,7 @@ require (
 	github.com/jackc/pgx/v5 v5.5.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
-	github.com/joseph-beck/routey v0.0.0-20231221122754-c92c39f4336d
+	github.com/joseph-beck/routey v0.0.0-20231223120311-913aef976a9f
 	github.com/kr/text v0.2.0 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/pelletier/go-toml/v2 v2.1.1 // indirect
