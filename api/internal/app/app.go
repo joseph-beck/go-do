@@ -35,8 +35,8 @@ var service = []routey.Service{
 
 // Runs the app
 //   - Creates the router.
-//   - Registers routes.
-//   - Runs the engine.
+//   - Registers routes & services.
+//   - Runs the App.
 //   - Waits for interrupt before shutting down app.
 func Run() {
 	log.Println("Starting app")
@@ -58,7 +58,5 @@ func Run() {
 func shutdown() {
 	r.Shutdown()
 	err := s.Close()
-	if err != nil {
-		panic(err)
-	}
+	util.ErrOut(err)
 }

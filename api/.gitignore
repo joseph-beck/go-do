@@ -2,4 +2,5 @@ configs
 
 .env
 
-database.db
+*.db
+*.sqlite
