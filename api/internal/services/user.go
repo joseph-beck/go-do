@@ -2,6 +2,7 @@ package services
 
 import (
 	"go-do/internal/database"
+	"go-do/internal/models"
 	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
@@ -21,14 +22,14 @@ func (s *UserService) Add() []routey.Route {
 	return []routey.Route{
 		// sign in and sign up
 		{
-			Path:          "/api/v1/users/signin",
+			Path:          "/api/v1/signin",
 			Params:        "",
 			Method:        routey.Get,
 			HandlerFunc:   s.SignIn(),
 			DecoratorFunc: nil,
 		},
 		{
-			Path:          "/api/v1/users/signup",
+			Path:          "/api/v1/signup",
 			Params:        "",
 			Method:        routey.Post,
 			HandlerFunc:   s.SignUp(),
@@ -40,14 +41,14 @@ func (s *UserService) Add() []routey.Route {
 			Params:        "",
 			Method:        routey.Get,
 			HandlerFunc:   s.List(),
-			DecoratorFunc: nil,
+			DecoratorFunc: s.Authorization(),
 		},
 		{
 			Path:          "/api/v1/users",
 			Params:        "/:id",
 			Method:        routey.Get,
 			HandlerFunc:   s.Get(),
-			DecoratorFunc: nil,
+			DecoratorFunc: s.Authorization(),
 		},
 		{
 			Path:          "/api/v1/users",
@@ -151,5 +152,19 @@ func (s *UserService) Head() routey.HandlerFunc {
 func (s *UserService) Options() routey.HandlerFunc {
 	return func(c *routey.Context) {
 		c.Status(http.StatusNotFound)
+	}
+}
+
+func (s *UserService) Authorization() routey.DecoratorFunc {
+	return func(f routey.HandlerFunc) routey.HandlerFunc {
+		return func(c *routey.Context) {
+			a := c.GetHeader("Authorization")
+			if !s.db.Check(&models.Admin{Token: a}, "admins") {
+				c.Status(http.StatusForbidden)
+				return
+			}
+
+			f(c)
+		}
 	}
 }

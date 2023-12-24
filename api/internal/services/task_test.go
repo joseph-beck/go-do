@@ -11,7 +11,7 @@ import (
 )
 
 func TestTaskList(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewTaskService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -26,7 +26,7 @@ func TestTaskList(t *testing.T) {
 }
 
 func TestTaskGet(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewTaskService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -41,7 +41,7 @@ func TestTaskGet(t *testing.T) {
 }
 
 func TestTaskPost(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewTaskService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -56,7 +56,7 @@ func TestTaskPost(t *testing.T) {
 }
 
 func TestTaskPut(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewTaskService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -71,7 +71,7 @@ func TestTaskPut(t *testing.T) {
 }
 
 func TestTaskPatch(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewTaskService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -86,7 +86,7 @@ func TestTaskPatch(t *testing.T) {
 }
 
 func TestTaskDelete(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewTaskService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -101,7 +101,7 @@ func TestTaskDelete(t *testing.T) {
 }
 
 func TestTaskHead(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewTaskService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -116,7 +116,7 @@ func TestTaskHead(t *testing.T) {
 }
 
 func TestTaskOptions(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewTaskService(&db)
 	app := routey.New()
 	app.Service(&s)

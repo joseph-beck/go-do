@@ -73,6 +73,12 @@ func (s *PingService) Add() []routey.Route {
 
 func (s *PingService) Get() routey.HandlerFunc {
 	return func(c *routey.Context) {
+		err := s.db.Ping()
+		if err != nil {
+			c.Status(http.StatusInternalServerError)
+			return
+		}
+
 		c.Status(http.StatusOK)
 	}
 }

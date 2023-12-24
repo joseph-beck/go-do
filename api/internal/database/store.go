@@ -141,6 +141,37 @@ func (s *Store) CheckUser(i uint) bool {
 	return r.Error == nil
 }
 
+// Read something into a struct slice from a given table
+func (s *Store) Read(i []interface{}, t string) error {
+	return nil
+}
+
+// Get something into a struct from a given table
+func (s *Store) Get(i interface{}, t string) error {
+	return nil
+}
+
+// Add something from a struct into a given table
+func (s *Store) Add(i interface{}, t string) error {
+	return nil
+}
+
+// Update something from a struct into a given table
+func (s *Store) Update(i interface{}, t string) error {
+	return nil
+}
+
+// Delete soemthing from a struct in a given table
+func (s *Store) Delete(i interface{}, t string) error {
+	return nil
+}
+
+// Check if a given value exists in the table
+func (s *Store) Check(i interface{}, t string) bool {
+	r := s.db.Table(t).Model(i).First(i)
+	return r.Error == nil
+}
+
 // Creates a new table if one does not exist with that name of the given model.
 func (s *Store) CreateTable(t string, m interface{}) error {
 	if s.CheckTable(t) {
@@ -165,4 +196,19 @@ func (s *Store) DeleteTable(t string) error {
 func (s *Store) CheckTable(t string) bool {
 	res := s.db.Migrator().HasTable(t)
 	return res
+}
+
+// Auto migrate all required tables
+func (s *Store) AutoMigrate() error {
+	err := s.db.AutoMigrate(&models.Admin{})
+	if err != nil {
+		return err
+	}
+
+	err = s.db.AutoMigrate(&models.User{})
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

@@ -2,6 +2,7 @@ package services
 
 import (
 	"go-do/internal/database"
+	"go-do/internal/models"
 	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
@@ -123,5 +124,19 @@ func (s *TaskService) Head() routey.HandlerFunc {
 func (s *TaskService) Options() routey.HandlerFunc {
 	return func(c *routey.Context) {
 		c.Status(http.StatusNotFound)
+	}
+}
+
+func (s *TaskService) Authorization() routey.DecoratorFunc {
+	return func(f routey.HandlerFunc) routey.HandlerFunc {
+		return func(c *routey.Context) {
+			a := c.GetHeader("Authorization")
+			if !s.db.Check(&models.Admin{Token: a}, "admins") {
+				c.Status(http.StatusForbidden)
+				return
+			}
+
+			f(c)
+		}
 	}
 }

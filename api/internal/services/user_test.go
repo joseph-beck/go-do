@@ -11,12 +11,12 @@ import (
 )
 
 func TestUserSignIn(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("GET", "/api/v1/users/signin", nil)
+	req, err := http.NewRequest("GET", "/api/v1/signin", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)
@@ -26,12 +26,12 @@ func TestUserSignIn(t *testing.T) {
 }
 
 func TestUserSignUp(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("GET", "/api/v1/users/signup", nil)
+	req, err := http.NewRequest("POST", "/api/v1/signup", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)
@@ -41,7 +41,7 @@ func TestUserSignUp(t *testing.T) {
 }
 
 func TestUserList(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -52,11 +52,11 @@ func TestUserList(t *testing.T) {
 	app.ServeHTTP(w, req)
 
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, http.StatusForbidden, w.Code)
 }
 
 func TestUserGet(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -67,11 +67,11 @@ func TestUserGet(t *testing.T) {
 	app.ServeHTTP(w, req)
 
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, http.StatusForbidden, w.Code)
 }
 
 func TestUserPost(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -86,7 +86,7 @@ func TestUserPost(t *testing.T) {
 }
 
 func TestUserPut(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -101,7 +101,7 @@ func TestUserPut(t *testing.T) {
 }
 
 func TestUserPatch(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -116,7 +116,7 @@ func TestUserPatch(t *testing.T) {
 }
 
 func TestUserDelete(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -131,7 +131,7 @@ func TestUserDelete(t *testing.T) {
 }
 
 func TestUserHead(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -146,7 +146,7 @@ func TestUserHead(t *testing.T) {
 }
 
 func TestUserOptions(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewUserService(&db)
 	app := routey.New()
 	app.Service(&s)

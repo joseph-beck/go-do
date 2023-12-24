@@ -45,6 +45,8 @@ func Run() {
 	util.ErrOut(err)
 
 	s = database.New(database.SQLiteDb())
+	err = s.AutoMigrate()
+	util.ErrOut(err)
 
 	r = router.New()
 	r.Register(routes)

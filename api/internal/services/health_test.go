@@ -11,12 +11,12 @@ import (
 )
 
 func TestHealthGet(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewHealthService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("GET", "/api/v1/health", nil)
+	req, err := http.NewRequest("GET", "/api/v1", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)
@@ -26,12 +26,12 @@ func TestHealthGet(t *testing.T) {
 }
 
 func TestHealthPost(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewHealthService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("POST", "/api/v1/health", nil)
+	req, err := http.NewRequest("POST", "/api/v1", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)
@@ -41,12 +41,12 @@ func TestHealthPost(t *testing.T) {
 }
 
 func TestHealthPut(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewHealthService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("PUT", "/api/v1/health", nil)
+	req, err := http.NewRequest("PUT", "/api/v1", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)
@@ -56,12 +56,12 @@ func TestHealthPut(t *testing.T) {
 }
 
 func TestHealthPatch(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewHealthService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("PATCH", "/api/v1/health", nil)
+	req, err := http.NewRequest("PATCH", "/api/v1", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)
@@ -71,12 +71,12 @@ func TestHealthPatch(t *testing.T) {
 }
 
 func TestHealthDelete(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewHealthService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("DELETE", "/api/v1/health", nil)
+	req, err := http.NewRequest("DELETE", "/api/v1", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)
@@ -86,12 +86,12 @@ func TestHealthDelete(t *testing.T) {
 }
 
 func TestHealthHead(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewHealthService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("HEAD", "/api/v1/health", nil)
+	req, err := http.NewRequest("HEAD", "/api/v1", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)
@@ -101,12 +101,12 @@ func TestHealthHead(t *testing.T) {
 }
 
 func TestHealthOptions(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewHealthService(&db)
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("OPTIONS", "/api/v1/health", nil)
+	req, err := http.NewRequest("OPTIONS", "/api/v1", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)

@@ -8,6 +8,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 const (
@@ -63,7 +64,7 @@ func PostgresDb() DbMaker {
 //   - SQLITE_DB : stores the location of .db file.
 func SQLiteDb() DbMaker {
 	return func() *gorm.DB {
-		db, err := gorm.Open(sqlite.Open(os.Getenv("SQLITE_DB")))
+		db, err := gorm.Open(sqlite.Open(os.Getenv("SQLITE_DB")), &gorm.Config{Logger: logger.Default.LogMode(logger.Silent)})
 		util.ErrOut(err)
 		return db
 	}

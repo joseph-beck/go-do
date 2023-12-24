@@ -11,7 +11,8 @@ import (
 )
 
 func TestPingGet(t *testing.T) {
-	db := database.New(database.MockDb())
+	// healthy db connection
+	db := database.New(database.SQLiteDb())
 	s := NewPingService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -23,10 +24,24 @@ func TestPingGet(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.Equal(t, http.StatusOK, w.Code)
+
+	// unhealthy db connection
+	db = database.New(database.MockDb())
+	s = NewPingService(&db)
+	app = routey.New()
+	app.Service(&s)
+
+	req, err = http.NewRequest("GET", "/api/v1/ping", nil)
+	assert.NoError(t, err)
+	w = httptest.NewRecorder()
+	app.ServeHTTP(w, req)
+
+	assert.NoError(t, err)
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
 }
 
 func TestPingPost(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewPingService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -41,7 +56,7 @@ func TestPingPost(t *testing.T) {
 }
 
 func TestPingPut(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewPingService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -56,7 +71,7 @@ func TestPingPut(t *testing.T) {
 }
 
 func TestPingPatch(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewPingService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -71,7 +86,7 @@ func TestPingPatch(t *testing.T) {
 }
 
 func TestPingDelete(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewPingService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -86,7 +101,7 @@ func TestPingDelete(t *testing.T) {
 }
 
 func TestPingHead(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewPingService(&db)
 	app := routey.New()
 	app.Service(&s)
@@ -101,7 +116,7 @@ func TestPingHead(t *testing.T) {
 }
 
 func TestPingOptions(t *testing.T) {
-	db := database.New(database.MockDb())
+	db := database.New(database.SQLiteDb())
 	s := NewPingService(&db)
 	app := routey.New()
 	app.Service(&s)

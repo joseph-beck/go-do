@@ -21,7 +21,7 @@ func (s *HealthService) Add() []routey.Route {
 	return []routey.Route{
 		{
 			Path:          "/api/v1",
-			Params:        "/:id",
+			Params:        "",
 			Method:        routey.Get,
 			HandlerFunc:   s.Get(),
 			DecoratorFunc: nil,
