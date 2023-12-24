@@ -82,7 +82,7 @@ func TestUserPost(t *testing.T) {
 	app.ServeHTTP(w, req)
 
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, http.StatusBadRequest, w.Code)
 }
 
 func TestUserPut(t *testing.T) {
@@ -97,7 +97,7 @@ func TestUserPut(t *testing.T) {
 	app.ServeHTTP(w, req)
 
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, http.StatusBadRequest, w.Code)
 }
 
 func TestUserPatch(t *testing.T) {
@@ -112,7 +112,7 @@ func TestUserPatch(t *testing.T) {
 	app.ServeHTTP(w, req)
 
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, http.StatusBadRequest, w.Code)
 }
 
 func TestUserDelete(t *testing.T) {
@@ -127,7 +127,7 @@ func TestUserDelete(t *testing.T) {
 	app.ServeHTTP(w, req)
 
 	assert.NoError(t, err)
-	assert.Equal(t, http.StatusOK, w.Code)
+	assert.Equal(t, http.StatusForbidden, w.Code)
 }
 
 func TestUserHead(t *testing.T) {

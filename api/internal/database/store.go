@@ -142,28 +142,33 @@ func (s *Store) CheckUser(i uint) bool {
 }
 
 // Read something into a struct slice from a given table
-func (s *Store) Read(i []interface{}, t string) error {
-	return nil
+func (s *Store) Read(i interface{}, t string) error {
+	r := s.db.Table(t).Find(i)
+	return r.Error
 }
 
 // Get something into a struct from a given table
 func (s *Store) Get(i interface{}, t string) error {
-	return nil
+	r := s.db.Table(t).Find(i).First(i)
+	return r.Error
 }
 
 // Add something from a struct into a given table
 func (s *Store) Add(i interface{}, t string) error {
-	return nil
+	r := s.db.Table(t).Create(i)
+	return r.Error
 }
 
 // Update something from a struct into a given table
 func (s *Store) Update(i interface{}, t string) error {
-	return nil
+	r := s.db.Table(t).Save(i)
+	return r.Error
 }
 
 // Delete soemthing from a struct in a given table
 func (s *Store) Delete(i interface{}, t string) error {
-	return nil
+	r := s.db.Table(t).Delete(i)
+	return r.Error
 }
 
 // Check if a given value exists in the table

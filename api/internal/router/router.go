@@ -6,6 +6,8 @@ import (
 	routey "github.com/joseph-beck/routey/pkg/router"
 )
 
+var c routey.Config
+
 // Stores the Routey App
 type Router struct {
 	App *routey.App
@@ -13,8 +15,14 @@ type Router struct {
 
 // Creates a new Router
 func New() Router {
+	c = routey.Config{
+		Port:  ":8080",
+		Debug: true,
+		CORS:  false,
+	}
+
 	return Router{
-		App: routey.New(),
+		App: routey.New(c),
 	}
 }
 
