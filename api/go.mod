@@ -4,7 +4,7 @@ go 1.21.5
 
 require (
 	github.com/joho/godotenv v1.5.1
-	github.com/joseph-beck/routey v0.0.0-20231225001552-eed29e37f636
+	github.com/joseph-beck/routey v0.0.0-20231229230208-dd5e5ab04d47
 	github.com/stretchr/testify v1.8.4
 	gorm.io/driver/postgres v1.5.4
 	gorm.io/gorm v1.25.5
