@@ -7,3 +7,8 @@ export type Task = {
   complete: boolean;
   deadline: Deadline;
 };
+
+export type Tasks = {
+  tasks: Task[];
+  task_count: number;
+};

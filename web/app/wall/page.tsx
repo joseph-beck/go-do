@@ -2,8 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { listTasks } from "@/lib/api/taskGet";
-import { Task } from "@/lib/types/task";
+import { Task, Tasks } from "@/lib/types/task";
 import { TaskCard } from '@/components/cards/taskCard';
+import { Page400 } from '@/components/status/400';
 
 export default function Page() {
   const [content, setContent] = useState<JSX.Element | null>(null);
@@ -11,8 +12,8 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const tasksData = await listTasks("tasks");
-        const taskElements = tasksData.map((task: Task, index: number) => taskCard(task, index));
+        const tasksData: Tasks = await listTasks("tasks");
+        const taskElements = tasksData.tasks.map((task: Task, index: number) => taskCard(task, index));
 
         const pageContent = (
           <div className="flex min-h-screen flex-col">
@@ -34,7 +35,7 @@ export default function Page() {
       } catch (error) {
         console.error('Error fetching tasks:', error)
 
-        setContent(<p>Error fetching tasks</p>);
+        setContent(<Page400 />);
       }
     };
 

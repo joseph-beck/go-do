@@ -1,8 +1,8 @@
-import { Task } from "@/lib/types/task";
+import { Task, Tasks } from "@/lib/types/task";
 
-export async function listTasks(table: string): Promise<Task[]> {
+export async function listTasks(table: string): Promise<Tasks> {
   const response = await fetch(
-    `http://localhost:8080/task/${table}`,
+    `http://localhost:8080/api/v1/tasks/${table}`,
     {
       method: "GET",
     },
