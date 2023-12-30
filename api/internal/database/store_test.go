@@ -20,8 +20,8 @@ func beforeEach() error {
 }
 
 func afterEach() error {
-	if s.CheckTable("test_table") {
-		err := s.DeleteTable("test_table")
+	if s.HasTable("test_table") {
+		err := s.DropTable("test_table")
 		if err != nil {
 			return err
 		}
@@ -51,7 +51,7 @@ func TestCreateTable(t *testing.T) {
 	err = s.CreateTable("test_table", &Table{})
 	assert.NoError(t, err)
 
-	e := s.CheckTable("test_table")
+	e := s.HasTable("test_table")
 	assert.True(t, e)
 
 	err = s.CreateTable("test_table", &Table{})
@@ -73,13 +73,13 @@ func TestDeleteTable(t *testing.T) {
 	err = s.CreateTable("test_table", &Table{})
 	assert.NoError(t, err)
 
-	err = s.DeleteTable("test_table")
+	err = s.DropTable("test_table")
 	assert.NoError(t, err)
 
-	e := s.CheckTable("test_table")
+	e := s.HasTable("test_table")
 	assert.False(t, e)
 
-	err = s.DeleteTable("test_table")
+	err = s.DropTable("test_table")
 	assert.Error(t, err)
 
 	err = afterEach()
@@ -98,10 +98,10 @@ func TestCheckTable(t *testing.T) {
 	err = s.CreateTable("test_table", &Table{})
 	assert.NoError(t, err)
 
-	e := s.CheckTable("test_table")
+	e := s.HasTable("test_table")
 	assert.True(t, e)
 
-	e = s.CheckTable("another_test_table")
+	e = s.HasTable("another_test_table")
 	assert.False(t, e)
 
 	err = afterEach()

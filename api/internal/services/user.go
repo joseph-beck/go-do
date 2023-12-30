@@ -175,7 +175,7 @@ func (s *UserService) Post() routey.HandlerFunc {
 		m.Password = util.Sha256Hash(m.Password)
 
 		if m.ID != 0 {
-			if s.db.Check(&m, s.table) {
+			if s.db.Contains(&m, s.table) {
 				fmt.Println("yo")
 				c.Status(http.StatusBadRequest)
 				return
@@ -202,7 +202,7 @@ func (s *UserService) Put() routey.HandlerFunc {
 		m.Password = util.Sha256Hash(m.Password)
 
 		if m.ID != 0 {
-			if s.db.Check(&models.User{Model: models.Model{ID: uint(m.ID)}}, s.table) {
+			if s.db.Contains(&models.User{Model: models.Model{ID: uint(m.ID)}}, s.table) {
 				err := s.db.Update(&m, s.table)
 				if err != nil {
 					fmt.Println(err, "1")
@@ -234,7 +234,7 @@ func (s *UserService) Patch() routey.HandlerFunc {
 		c.ShouldBindJSON(&m)
 		m.Password = util.Sha256Hash(m.Password)
 
-		if !s.db.Check(&models.User{Model: models.Model{ID: uint(m.ID)}}, s.table) {
+		if !s.db.Contains(&models.User{Model: models.Model{ID: uint(m.ID)}}, s.table) {
 			c.Status(http.StatusBadRequest)
 			return
 		}
@@ -261,7 +261,7 @@ func (s *UserService) Delete() routey.HandlerFunc {
 		}
 
 		m := models.User{Model: models.Model{ID: uint(i)}}
-		if !s.db.Check(&m, s.table) {
+		if !s.db.Contains(&m, s.table) {
 			c.Status(http.StatusBadRequest)
 			return
 		}
@@ -292,7 +292,7 @@ func (s *UserService) Authorization() routey.DecoratorFunc {
 	return func(f routey.HandlerFunc) routey.HandlerFunc {
 		return func(c *routey.Context) {
 			a := c.GetHeader("Authorization")
-			if !s.db.Check(&models.Admin{Token: a}, "admins") {
+			if !s.db.Contains(&models.Admin{Token: a}, "admins") {
 				c.Status(http.StatusForbidden)
 				return
 			}

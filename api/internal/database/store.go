@@ -46,7 +46,7 @@ func (s *Store) Ping() error {
 // Lists all tasks from a given table./
 // It should not return any with id of 0.
 func (s *Store) ListTask(t string) ([]models.Task, error) {
-	if !s.CheckTable(t) {
+	if !s.HasTable(t) {
 		return nil, util.ErrTableDoesNotExist
 	}
 
@@ -64,7 +64,7 @@ func (s *Store) GetTask(t string, i uint) (models.Task, error) {
 
 // Adds a given task to the given table.
 func (s *Store) AddTask(t string, m models.Task) error {
-	if !s.CheckTable(t) {
+	if !s.HasTable(t) {
 		return util.ErrTableDoesNotExist
 	}
 
@@ -74,7 +74,7 @@ func (s *Store) AddTask(t string, m models.Task) error {
 
 // Updates the given task in the given table.
 func (s *Store) UpdateTask(t string, m models.Task) error {
-	if !s.CheckTable(t) {
+	if !s.HasTable(t) {
 		return util.ErrTableDoesNotExist
 	}
 
@@ -84,7 +84,7 @@ func (s *Store) UpdateTask(t string, m models.Task) error {
 
 // Deletes a given task id from a given table.
 func (s *Store) DeleteTask(t string, i uint) error {
-	if !s.CheckTable(t) {
+	if !s.HasTable(t) {
 		return util.ErrTableDoesNotExist
 	}
 
@@ -171,15 +171,15 @@ func (s *Store) Delete(i interface{}, t string) error {
 	return r.Error
 }
 
-// Check if a given value exists in the table
-func (s *Store) Check(i interface{}, t string) bool {
+// Contains if a given value exists in the table
+func (s *Store) Contains(i interface{}, t string) bool {
 	r := s.db.Table(t).Model(i).First(i)
 	return r.Error == nil
 }
 
 // Creates a new table if one does not exist with that name of the given model.
 func (s *Store) CreateTable(t string, m interface{}) error {
-	if s.CheckTable(t) {
+	if s.HasTable(t) {
 		return util.ErrTableAlreadyExists
 	}
 
@@ -188,8 +188,8 @@ func (s *Store) CreateTable(t string, m interface{}) error {
 }
 
 // Deletes a given table name
-func (s *Store) DeleteTable(t string) error {
-	if !s.CheckTable(t) {
+func (s *Store) DropTable(t string) error {
+	if !s.HasTable(t) {
 		return util.ErrTableDoesNotExist
 	}
 
@@ -198,7 +198,7 @@ func (s *Store) DeleteTable(t string) error {
 }
 
 // Checks if the given table name exists in the database
-func (s *Store) CheckTable(t string) bool {
+func (s *Store) HasTable(t string) bool {
 	res := s.db.Migrator().HasTable(t)
 	return res
 }
