@@ -18,7 +18,7 @@ func New() Router {
 	c = routey.Config{
 		Port:  ":8080",
 		Debug: true,
-		CORS:  false,
+		CORS:  true,
 	}
 
 	return Router{
