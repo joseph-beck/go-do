@@ -9,6 +9,7 @@ export const CheckBox: React.FC<Props> = ({ id, text, ticked }): JSX.Element => 
     <div className="flex items-center space-x-2">
       <input
         type="checkbox"
+        defaultChecked={ticked}
         id={id}
         className="h-4 w-4 rounded border-gray-300 text-primary-600 shadow-sm focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 focus:ring-offset-0 disabled:cursor-not-allowed disabled:text-gray-400"
       />
@@ -20,4 +21,4 @@ export const CheckBox: React.FC<Props> = ({ id, text, ticked }): JSX.Element => 
       </label>
     </div>
   );
-}
+};

@@ -1,7 +1,7 @@
 import { Blink, SpecialBlink } from "../input/blink";
 import { Divider } from "../layout/divider";
 
-type Navs = {
+interface Navs {
   title: string;
   path: string;
 };

@@ -3,7 +3,7 @@ import { Blink, SpecialBlink } from "../input/blink";
 import { Divider } from "../layout/divider";
 import Link from "next/link";
 
-export type Props = {
+interface Props {
 
 }
 
@@ -13,7 +13,6 @@ type Navs = {
 }
 
 export const Footer: React.FC<Props> = (): JSX.Element => {
-
   const footerNavs: Navs[] = [
     { href: '/features', name: 'features' },
     { href: '/about', name: 'about' },

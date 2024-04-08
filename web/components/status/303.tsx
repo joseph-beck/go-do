@@ -1,6 +1,5 @@
 import { Divider } from "../layout/divider";
 import { Footer } from "../navigation/footer";
-import { NavigationBar } from "../navigation/navbar";
 
 export const Page303 = (): JSX.Element => {
   const content = (

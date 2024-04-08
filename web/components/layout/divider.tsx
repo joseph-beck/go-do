@@ -1,4 +1,4 @@
-export type Props = {
+interface Props {
   width: "1/4" | "1/2" | "3/4" | "full";
 }
 
