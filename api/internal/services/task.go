@@ -5,9 +5,9 @@ import (
 	"go-do/internal/database"
 	"go-do/internal/models"
 	"go-do/pkg/util"
-	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
+	"github.com/joseph-beck/routey/pkg/status"
 )
 
 type TaskService struct {
@@ -92,20 +92,20 @@ func (s *TaskService) List() routey.HandlerFunc {
 
 		t, err := c.Param("list")
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		err = initTaskTable(s.db, t)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		var m []models.Task
 		err = s.db.Read(&m, t)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
@@ -114,7 +114,7 @@ func (s *TaskService) List() routey.HandlerFunc {
 			TaskCount: len(m),
 		}
 
-		c.JSON(http.StatusOK, r)
+		c.JSON(status.OK, r)
 	}
 }
 
@@ -124,72 +124,72 @@ func (s *TaskService) Get() routey.HandlerFunc {
 
 		t, err := c.Param("list")
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		i, err := c.ParamInt("task")
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		err = initTaskTable(s.db, t)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		e := s.db.Contains(&models.Task{Model: models.Model{ID: uint(i)}}, t)
 		if !e {
-			c.Status(http.StatusNotFound)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		r := models.Task{Model: models.Model{ID: uint(i)}}
 		err = s.db.Get(&r, t)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
-		c.JSON(http.StatusOK, r)
+		c.JSON(status.OK, r)
 	}
 }
 
 func (s *TaskService) Post() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusOK)
+		c.Status(status.OK)
 	}
 }
 
 func (s *TaskService) Put() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusOK)
+		c.Status(status.OK)
 	}
 }
 
 func (s *TaskService) Patch() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusOK)
+		c.Status(status.OK)
 	}
 }
 
 func (s *TaskService) Delete() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusOK)
+		c.Status(status.OK)
 	}
 }
 
 func (s *TaskService) Head() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *TaskService) Options() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
@@ -198,7 +198,7 @@ func (s *TaskService) Authorization() routey.DecoratorFunc {
 		return func(c *routey.Context) {
 			a := c.GetHeader("Authorization")
 			if !s.db.Contains(&models.Admin{Token: a}, "admins") {
-				c.Status(http.StatusForbidden)
+				c.Status(status.Forbidden)
 				return
 			}
 

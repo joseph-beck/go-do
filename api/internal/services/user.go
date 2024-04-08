@@ -5,9 +5,9 @@ import (
 	"go-do/internal/database"
 	"go-do/internal/models"
 	"go-do/pkg/util"
-	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
+	"github.com/joseph-beck/routey/pkg/status"
 )
 
 type UserService struct {
@@ -101,13 +101,13 @@ func (s *UserService) Add() []routey.Route {
 
 func (s *UserService) SignIn() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Render(http.StatusOK, "sign in")
+		c.Render(status.OK, "sign in")
 	}
 }
 
 func (s *UserService) SignUp() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Render(http.StatusOK, "sign up")
+		c.Render(status.OK, "sign up")
 	}
 }
 
@@ -122,12 +122,12 @@ func (s *UserService) List() routey.HandlerFunc {
 		var m []models.User
 		err := s.db.Read(&m, s.table)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		if l == 0 && o == 0 {
-			c.JSON(http.StatusOK, m)
+			c.JSON(status.OK, m)
 			return
 		}
 
@@ -137,7 +137,7 @@ func (s *UserService) List() routey.HandlerFunc {
 		}
 
 		r := m[o:e]
-		c.JSON(http.StatusOK, r)
+		c.JSON(status.OK, r)
 	}
 }
 
@@ -148,7 +148,7 @@ func (s *UserService) Get() routey.HandlerFunc {
 
 		i, err := c.ParamInt("id")
 		if err != nil {
-			c.Status(http.StatusBadGateway)
+			c.Status(status.BadRequest)
 			return
 		}
 
@@ -157,11 +157,11 @@ func (s *UserService) Get() routey.HandlerFunc {
 		}
 		err = s.db.Get(&m, s.table)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
-		c.JSON(http.StatusOK, m)
+		c.JSON(status.OK, m)
 	}
 }
 
@@ -176,19 +176,18 @@ func (s *UserService) Post() routey.HandlerFunc {
 
 		if m.ID != 0 {
 			if s.db.Contains(&m, s.table) {
-				fmt.Println("yo")
-				c.Status(http.StatusBadRequest)
+				c.Status(status.BadRequest)
 				return
 			}
 		}
 
 		err := s.db.Add(&m, s.table)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
-		c.Status(http.StatusNoContent)
+		c.Status(status.NoContent)
 	}
 }
 
@@ -206,10 +205,10 @@ func (s *UserService) Put() routey.HandlerFunc {
 				err := s.db.Update(&m, s.table)
 				if err != nil {
 					fmt.Println(err, "1")
-					c.Status(http.StatusBadRequest)
+					c.Status(status.BadRequest)
 					return
 				}
-				c.Status(http.StatusNoContent)
+				c.Status(status.NoContent)
 				return
 			}
 		}
@@ -217,11 +216,11 @@ func (s *UserService) Put() routey.HandlerFunc {
 		err := s.db.Add(&m, s.table)
 		if err != nil {
 			fmt.Println(err, "2")
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
-		c.Status(http.StatusNoContent)
+		c.Status(status.NoContent)
 	}
 }
 
@@ -235,17 +234,17 @@ func (s *UserService) Patch() routey.HandlerFunc {
 		m.Password = util.Sha256Hash(m.Password)
 
 		if !s.db.Contains(&models.User{Model: models.Model{ID: uint(m.ID)}}, s.table) {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		err := s.db.Update(&m, s.table)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
-		c.Status(http.StatusNoContent)
+		c.Status(status.NoContent)
 	}
 }
 
@@ -256,35 +255,35 @@ func (s *UserService) Delete() routey.HandlerFunc {
 
 		i, err := c.ParamInt("id")
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		m := models.User{Model: models.Model{ID: uint(i)}}
 		if !s.db.Contains(&m, s.table) {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
 		err = s.db.Delete(&m, s.table)
 		if err != nil {
-			c.Status(http.StatusBadRequest)
+			c.Status(status.BadRequest)
 			return
 		}
 
-		c.Status(http.StatusNoContent)
+		c.Status(status.NoContent)
 	}
 }
 
 func (s *UserService) Head() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *UserService) Options() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
@@ -293,7 +292,7 @@ func (s *UserService) Authorization() routey.DecoratorFunc {
 		return func(c *routey.Context) {
 			a := c.GetHeader("Authorization")
 			if !s.db.Contains(&models.Admin{Token: a}, "admins") {
-				c.Status(http.StatusForbidden)
+				c.Status(status.Forbidden)
 				return
 			}
 

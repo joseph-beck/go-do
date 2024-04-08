@@ -2,9 +2,9 @@ package services
 
 import (
 	"go-do/internal/database"
-	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
+	"github.com/joseph-beck/routey/pkg/status"
 )
 
 type HealthService struct {
@@ -73,42 +73,42 @@ func (s *HealthService) Add() []routey.Route {
 
 func (s *HealthService) Get() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusOK)
+		c.Status(status.OK)
 	}
 }
 
 func (s *HealthService) Post() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *HealthService) Put() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *HealthService) Patch() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *HealthService) Delete() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *HealthService) Head() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *HealthService) Options() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }

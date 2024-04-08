@@ -16,7 +16,7 @@ func TestTaskList(t *testing.T) {
 	app := routey.New()
 	app.Service(&s)
 
-	req, err := http.NewRequest("GET", "/api/v1/tasks", nil)
+	req, err := http.NewRequest("GET", "/api/v1/tasks/1", nil)
 	assert.NoError(t, err)
 	w := httptest.NewRecorder()
 	app.ServeHTTP(w, req)

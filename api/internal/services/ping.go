@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	routey "github.com/joseph-beck/routey/pkg/router"
+	"github.com/joseph-beck/routey/pkg/status"
 )
 
 type PingService struct {
@@ -79,42 +80,42 @@ func (s *PingService) Get() routey.HandlerFunc {
 			return
 		}
 
-		c.Status(http.StatusOK)
+		c.Status(status.OK)
 	}
 }
 
 func (s *PingService) Post() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *PingService) Put() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *PingService) Patch() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *PingService) Delete() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *PingService) Head() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
 
 func (s *PingService) Options() routey.HandlerFunc {
 	return func(c *routey.Context) {
-		c.Status(http.StatusNotFound)
+		c.Status(status.NotFound)
 	}
 }
